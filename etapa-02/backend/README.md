@@ -82,10 +82,10 @@ NODE_ENV=development
 
 ### Setup Google Gemini
 1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Habilite **Google AI Studio** na região Google AI Studio
-3. Configure acesso ao **Gemini 2.5 Flash**
-4. Crie credenciais API Key com permissão para usar a Gemini API
-5. Adicione credenciais ao `.env`
+2. Clique em **Create API key**
+3. Crie ou selecione um projeto Google
+4. Copie a chave para `GEMINI_API_KEY`
+5. Configure `GEMINI_MODEL=gemini-2.5-flash` no `.env`
 
 ## 🧠 Serviços (Novos/Atualizados)
 
@@ -267,9 +267,9 @@ GET /api/status  # Status com config Gemini
 ## 🔒 Segurança (Atualizada)
 
 ### Gemini API Key
-- **chave da Gemini API** com permissões mínimas
-- **Region lock** - Apenas Google AI Studio
-- **Model access** - Específico para Gemini 2.5 Flash
+- **Chave da Gemini API** mantida apenas no backend
+- **Modelo configurável** via `GEMINI_MODEL`
+- **System prompt** customizável em `src/prompts/system-prompt.txt`
 
 ### Rate Limiting Específico
 ```typescript
@@ -306,8 +306,7 @@ curl http://localhost:3001/api/status
 {
   "service": "Conversational Agent Backend",
   "deepgram": "connected",
-  "Gemini": "connected",
-  "aws_region": "Google AI Studio"
+  "gemini": "connected"
 }
 ```
 

@@ -39,20 +39,17 @@ challenge/index
 :caption: Documentação Técnica
 
 guides/troubleshooting
-guides/deployment
-guides/best-practices
 ```
 
-## 🔧 Configuração Avançada
+## 🔧 Setup e APIs
 
 ```{toctree}
 :maxdepth: 2
 :caption: Setup e APIs
 
-api/deepgram-setup
-api/aws-Gemini-setup
-api/elevenlabs-setup
-api/websocket-events
+setup/prerequisites
+setup/installation
+setup/configuration
 ```
 
 ## ✨ O que você aprenderá

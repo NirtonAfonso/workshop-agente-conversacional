@@ -59,9 +59,10 @@ GEMINI_MODEL=gemini-2.5-flash
 ### Setup Google Gemini
 
 1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Habilite Google AI Studio na região Google AI Studio
-3. Use o modelo gemini-2.5-flash
-4. Crie credenciais API Key com permissão para usar a Gemini API
+2. Clique em **Create API key**
+3. Crie ou selecione um projeto Google
+4. Copie a chave para `GEMINI_API_KEY`
+5. Use `GEMINI_MODEL=gemini-2.5-flash`
 
 ## 🎓 O que Você Aprende (Novo)
 
@@ -86,7 +87,7 @@ GEMINI_MODEL=gemini-2.5-flash
 
 frontend
 backend
-aws-setup
+gemini-setup
 troubleshooting
 ```
 

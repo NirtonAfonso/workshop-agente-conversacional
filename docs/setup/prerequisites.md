@@ -57,15 +57,15 @@ console.log('MediaDevices:', !!navigator.mediaDevices);
 4. Copie a chave gerada
 
 ### 2. Google Gemini (IA Conversacional)
-- **Conta**: [Google AI Studio](https://console.aws.amazon.com)
-- **Região**: Google AI Studio (obrigatório para Gemini)
+- **Conta**: [Google AI Studio](https://aistudio.google.com/app/apikey)
+- **Chave**: Gemini API key
 - **Modelo**: Gemini 2.5 Flash
 
 #### Como Configurar
-1. Acesse Google AI Studio
-2. Navegue até **Google AI Studio**
-3. Copie a chave gerada
-4. Crie credenciais API Key com permissão para usar a Gemini API
+1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Clique em **Create API key**
+3. Crie ou selecione um projeto Google
+4. Copie a chave gerada para `GEMINI_API_KEY`
 
 ### 3. ElevenLabs (Text-to-Speech)
 - **Conta**: [Criar conta](https://elevenlabs.io)
