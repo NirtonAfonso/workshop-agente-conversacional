@@ -5,6 +5,7 @@ import { logger } from '@/utils/logger.js';
 
 export class GeminiTTSService {
   private client: GoogleGenAI;
+  private readonly maxRetries = 3;
 
   constructor() {
     this.client = new GoogleGenAI({ apiKey: serverConfig.geminiApiKey });
@@ -14,7 +15,7 @@ export class GeminiTTSService {
     try {
       logger.info(`Generating speech with Gemini TTS: "${text.substring(0, 100)}..."`, { sessionId });
 
-      const response = await this.client.models.generateContent({
+      const response = await this.generateContentWithRetry({
         model: serverConfig.geminiTtsModel,
         contents: [{ parts: [{ text: this.buildTtsPrompt(text) }] }],
         config: {
@@ -68,7 +69,7 @@ export class GeminiTTSService {
     try {
       logger.info('Testing Gemini TTS connection...');
 
-      const response = await this.client.models.generateContent({
+      const response = await this.generateContentWithRetry({
         model: serverConfig.geminiTtsModel,
         contents: [{ parts: [{ text: 'Say cheerfully: ok' }] }],
         config: {
@@ -97,6 +98,77 @@ export class GeminiTTSService {
 
   private buildTtsPrompt(text: string): string {
     return `Leia em voz alta, de forma natural e clara, mantendo o idioma e o tom do texto:\n\n${text}`;
+  }
+
+  private async generateContentWithRetry(request: any): Promise<any> {
+    let lastError: unknown;
+
+    for (let attempt = 1; attempt <= this.maxRetries; attempt += 1) {
+      try {
+        return await this.client.models.generateContent(request);
+      } catch (error) {
+        lastError = error;
+
+        if (!this.isRetryableError(error) || attempt === this.maxRetries) {
+          throw error;
+        }
+
+        const delayMs = this.getRetryDelay(attempt);
+        logger.warn('Retrying Gemini TTS after transient API error', {
+          attempt,
+          nextAttempt: attempt + 1,
+          delayMs,
+          error: this.formatError(error),
+        });
+        await this.sleep(delayMs);
+      }
+    }
+
+    throw lastError;
+  }
+
+  private isRetryableError(error: unknown): boolean {
+    const status = this.getErrorStatus(error);
+    const message = this.formatError(error);
+
+    return status === 429 || status === 500 || status === 502 || status === 503 || status === 504 ||
+      message.includes('"status":"INTERNAL"') ||
+      message.includes('Internal error encountered') ||
+      message.includes('UNAVAILABLE') ||
+      message.includes('RESOURCE_EXHAUSTED');
+  }
+
+  private getErrorStatus(error: unknown): number | undefined {
+    if (typeof error === 'object' && error !== null) {
+      const maybeError = error as { status?: number; code?: number };
+      return maybeError.status || maybeError.code;
+    }
+
+    return undefined;
+  }
+
+  private getRetryDelay(attempt: number): number {
+    return Math.min(750 * 2 ** (attempt - 1), 3000);
+  }
+
+  private sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  private formatError(error: unknown): string {
+    if (error instanceof Error) {
+      return error.message;
+    }
+
+    if (typeof error === 'string') {
+      return error;
+    }
+
+    try {
+      return JSON.stringify(error);
+    } catch {
+      return 'Unknown error';
+    }
   }
 
   private extractAudio(response: any): { data: string | Uint8Array; mimeType?: string } {
