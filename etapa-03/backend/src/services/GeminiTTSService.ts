@@ -108,34 +108,60 @@ export class GeminiTTSService {
         return await this.client.models.generateContent(request);
       } catch (error) {
         lastError = error;
+        const retry = this.getRetryDecision(error, attempt);
 
-        if (!this.isRetryableError(error) || attempt === this.maxRetries) {
-          throw error;
+        if (!retry.shouldRetry) {
+          throw new Error(this.getFriendlyErrorMessage(error));
         }
 
-        const delayMs = this.getRetryDelay(attempt);
         logger.warn('Retrying Gemini TTS after transient API error', {
           attempt,
           nextAttempt: attempt + 1,
-          delayMs,
+          delayMs: retry.delayMs,
+          reason: retry.reason,
           error: this.formatError(error),
         });
-        await this.sleep(delayMs);
+        await this.sleep(retry.delayMs);
       }
     }
 
-    throw lastError;
+    throw new Error(this.getFriendlyErrorMessage(lastError));
   }
 
-  private isRetryableError(error: unknown): boolean {
+  private getRetryDecision(error: unknown, attempt: number): { shouldRetry: boolean; delayMs: number; reason: string } {
+    if (attempt >= this.maxRetries) {
+      return { shouldRetry: false, delayMs: 0, reason: 'max retries reached' };
+    }
+
     const status = this.getErrorStatus(error);
     const message = this.formatError(error);
+    const payload = this.parseErrorPayload(message);
+    const apiStatus = payload?.error?.status;
+    const isQuotaError = status === 429 || apiStatus === 'RESOURCE_EXHAUSTED' || message.includes('RESOURCE_EXHAUSTED');
 
-    return status === 429 || status === 500 || status === 502 || status === 503 || status === 504 ||
+    if (isQuotaError) {
+      if (this.isDailyQuotaExceeded(payload, message)) {
+        return { shouldRetry: false, delayMs: 0, reason: 'daily quota exceeded' };
+      }
+
+      const delayMs = this.getRetryDelayFromError(payload, message) ?? this.getRetryDelay(attempt);
+      return {
+        shouldRetry: delayMs <= 30000,
+        delayMs,
+        reason: 'rate limit retry delay',
+      };
+    }
+
+    const isTransientError = status === 500 || status === 502 || status === 503 || status === 504 ||
       message.includes('"status":"INTERNAL"') ||
       message.includes('Internal error encountered') ||
-      message.includes('UNAVAILABLE') ||
-      message.includes('RESOURCE_EXHAUSTED');
+      message.includes('UNAVAILABLE');
+
+    return {
+      shouldRetry: isTransientError,
+      delayMs: this.getRetryDelay(attempt),
+      reason: isTransientError ? 'transient server error' : 'not retryable',
+    };
   }
 
   private getErrorStatus(error: unknown): number | undefined {
@@ -149,6 +175,57 @@ export class GeminiTTSService {
 
   private getRetryDelay(attempt: number): number {
     return Math.min(750 * 2 ** (attempt - 1), 3000);
+  }
+
+  private getRetryDelayFromError(payload: any, message: string): number | undefined {
+    const retryInfo = payload?.error?.details?.find((detail: any) =>
+      detail['@type'] === 'type.googleapis.com/google.rpc.RetryInfo'
+    );
+    const retryDelay = retryInfo?.retryDelay;
+
+    if (typeof retryDelay === 'string') {
+      return this.parseDurationMs(retryDelay);
+    }
+
+    const match = message.match(/Please retry in ([\d.]+)\s*(ms|s)/i);
+    if (match) {
+      const value = Number(match[1]);
+      return match[2].toLowerCase() === 's' ? Math.ceil(value * 1000) : Math.ceil(value);
+    }
+
+    return undefined;
+  }
+
+  private parseDurationMs(duration: string): number | undefined {
+    const match = duration.match(/^([\d.]+)\s*(ms|s)$/i);
+    if (!match) {
+      return undefined;
+    }
+
+    const value = Number(match[1]);
+    return match[2].toLowerCase() === 's' ? Math.ceil(value * 1000) : Math.ceil(value);
+  }
+
+  private isDailyQuotaExceeded(payload: any, message: string): boolean {
+    const violations = payload?.error?.details?.flatMap((detail: any) => detail.violations ?? []) ?? [];
+    return violations.some((violation: any) => String(violation.quotaId || '').includes('PerDay')) ||
+      message.includes('GenerateRequestsPerDay');
+  }
+
+  private getFriendlyErrorMessage(error: unknown): string {
+    const message = this.formatError(error);
+    const payload = this.parseErrorPayload(message);
+    const apiStatus = payload?.error?.status;
+
+    if (apiStatus === 'RESOURCE_EXHAUSTED' || message.includes('RESOURCE_EXHAUSTED')) {
+      if (this.isDailyQuotaExceeded(payload, message)) {
+        return 'Cota diária do Gemini TTS excedida para este projeto. Verifique billing/tiers no Google AI Studio ou aguarde o reset da cota.';
+      }
+
+      return 'Limite por minuto do Gemini TTS excedido. Aguarde alguns segundos e tente novamente.';
+    }
+
+    return message;
   }
 
   private sleep(ms: number): Promise<void> {
@@ -168,6 +245,14 @@ export class GeminiTTSService {
       return JSON.stringify(error);
     } catch {
       return 'Unknown error';
+    }
+  }
+
+  private parseErrorPayload(message: string): any | undefined {
+    try {
+      return JSON.parse(message);
+    } catch {
+      return undefined;
     }
   }
 
