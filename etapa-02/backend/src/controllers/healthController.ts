@@ -35,11 +35,15 @@ export const healthCheck = async (req: Request, res: Response) => {
         deepgramModel: serverConfig.deepgramModel,
         deepgramLanguage: serverConfig.deepgramLanguage,
         audioSampleRate: serverConfig.audioSampleRate,
+        awsRegion: serverConfig.awsRegion,
+        bedrockModelId: serverConfig.bedrockModelId,
       },
     };
 
-    // Test Deepgram connection
+    // Test API connections
     let deepgramStatus = 'unknown';
+    let bedrockStatus = 'unknown';
+
     try {
       if (socketService) {
         const isConnected = await socketService.testDeepgramConnection();
@@ -50,12 +54,23 @@ export const healthCheck = async (req: Request, res: Response) => {
       logger.error('Deepgram health check failed', { error });
     }
 
+    try {
+      if (socketService) {
+        const isConnected = await socketService.testBedrockConnection();
+        bedrockStatus = isConnected ? 'connected' : 'disconnected';
+      }
+    } catch (error) {
+      bedrockStatus = 'error';
+      logger.error('Bedrock health check failed', { error });
+    }
+
     const responseTime = Date.now() - startTime;
 
     const response = {
       ...health,
       services: {
         deepgram: deepgramStatus,
+        bedrock: bedrockStatus,
         websocket: socketService ? 'running' : 'not_initialized',
       },
       responseTime: `${responseTime}ms`,
@@ -78,17 +93,18 @@ export const readinessCheck = async (req: Request, res: Response) => {
     // Check if all required services are ready
     const checks = {
       deepgram: false,
+      bedrock: false,
       websocket: false,
     };
 
-    // Check Deepgram connection
     try {
       if (socketService) {
         checks.deepgram = await socketService.testDeepgramConnection();
+        checks.bedrock = await socketService.testBedrockConnection();
         checks.websocket = true;
       }
     } catch (error) {
-      logger.error('Readiness check failed for Deepgram', { error });
+      logger.error('Readiness check failed for external APIs', { error });
     }
 
     const isReady = Object.values(checks).every(check => check === true);

@@ -187,14 +187,14 @@ const personalities = [
     name: "Professor",
     description: "Especialista em ensinar e explicar",
     systemPrompt: "Você é um professor paciente que adora ensinar...",
-    voiceId: "21m00Tcm4TlvDq8ikWAM",
+    voiceId: "Kore",
     responseStyle: "formal"
   },
   {
     name: "Amigo Casual",
     description: "Conversa relaxada e divertida",
     systemPrompt: "Você é um amigo descontraído que adora conversar...",
-    voiceId: "EXAVITQu4vr4xnSDxMaL",
+    voiceId: "Puck",
     responseStyle: "casual"
   }
 ]

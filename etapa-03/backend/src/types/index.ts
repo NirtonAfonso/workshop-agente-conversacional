@@ -37,8 +37,11 @@ export interface ServerConfig {
   interimResults: boolean;
   endpointing: number;
   utterances: boolean;
+  awsRegion: string;
+  awsAccessKeyId: string;
+  awsSecretAccessKey: string;
+  bedrockModelId: string;
   geminiApiKey: string;
-  geminiModel: string;
   geminiTtsModel: string;
   geminiTtsVoice: string;
 }

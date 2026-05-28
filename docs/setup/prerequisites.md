@@ -56,26 +56,26 @@ console.log('MediaDevices:', !!navigator.mediaDevices);
 3. Clique em **Create API Key**
 4. Copie a chave gerada
 
-### 2. Google Gemini (IA Conversacional)
-- **Conta**: [Google AI Studio](https://aistudio.google.com/app/apikey)
-- **Chave**: Gemini API key
-- **Modelo**: Gemini 3.1 Flash Lite
+### 2. AWS Bedrock (IA Conversacional)
+- **Conta**: [AWS Console](https://console.aws.amazon.com)
+- **Região**: us-east-1 (obrigatório para Claude)
+- **Modelo**: Claude 3.5 Haiku
 
 #### Como Configurar
-1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Clique em **Create API key**
-3. Crie ou selecione um projeto Google
-4. Copie a chave gerada para `GEMINI_API_KEY`
+1. Acesse AWS Console
+2. Navegue até **Amazon Bedrock**
+3. Habilite acesso ao modelo Claude
+4. Crie credenciais IAM com permissões Bedrock
 
 ### 3. Gemini TTS (Text-to-Speech)
 - **Conta**: [Google AI Studio](https://aistudio.google.com/app/apikey)
 - **Chave**: usa a mesma `GEMINI_API_KEY`
 - **Modelo**: `gemini-3.1-flash-tts-preview`
 
-#### Como Configurar
-1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Crie ou reutilize a chave configurada em `GEMINI_API_KEY`
-3. Configure `GEMINI_TTS_MODEL` e `GEMINI_TTS_VOICE`
+#### Como Obter API Key
+1. Acesse o Google AI Studio
+2. Crie ou reutilize uma chave da Gemini API
+3. Copie a chave da API
 
 ## 💰 Custos Estimados
 
@@ -83,7 +83,7 @@ console.log('MediaDevices:', !!navigator.mediaDevices);
 - **Gratuito**: $150 em créditos
 - **Uso estimado**: ~$5-10 para workshop completo
 
-### Google Gemini
+### AWS Bedrock
 - **Pay-per-use**: ~$0.003 por 1K tokens
 - **Uso estimado**: ~$2-5 para workshop completo
 
@@ -102,11 +102,14 @@ Prepare um arquivo `.env` com estas variáveis:
 # Deepgram
 DEEPGRAM_API_KEY=
 
-# Google Gemini
-GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-3.1-flash-lite
+# AWS Bedrock
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+BEDROCK_MODEL_ID=us.anthropic.claude-3-5-haiku-20241022-v1:0
 
 # Gemini TTS
+GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
 GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
 GEMINI_TTS_VOICE=Kore
 
@@ -124,7 +127,7 @@ Antes de começar, verifique:
 - [ ] Git configurado
 - [ ] Navegador moderno com Web Audio API
 - [ ] Conta Deepgram com API key
-- [ ] Conta no Google AI Studio com acesso Gemini
+- [ ] Conta AWS com acesso Bedrock
 - [ ] Gemini TTS configurado no Google AI Studio
 - [ ] Arquivo `.env` preparado
 - [ ] Microfone funcionando

@@ -16,8 +16,8 @@ Servidor Node.js + TypeScript que orquestra a comunicação entre frontend e mú
 
 ### Integrações de IA
 - **Deepgram SDK** - Speech-to-Text em tempo real
-- **Google Gemini** - Gemini 3.1 Flash Lite para IA conversacional
-- **Gemini TTS** - Text-to-Speech via Google AI Studio
+- **AWS Bedrock** - Claude para IA conversacional
+- **Gemini TTS** - Text-to-Speech de alta qualidade
 
 ### Segurança e DevEx
 - **Helmet** - Headers de segurança
@@ -36,7 +36,7 @@ backend/
 │   │   └── security.ts          # Segurança e validação
 │   ├── services/                # Lógica de negócio
 │   │   ├── DeepgramService.ts   # Integração Deepgram STT
-│   │   ├── GeminiService.ts    # Integração Gemini
+│   │   ├── BedrockService.ts    # Integração AWS Bedrock Claude
 │   │   ├── GeminiTTSService.ts # Integração Gemini TTS
 │   │   └── SocketService.ts     # Gerenciamento WebSocket
 │   ├── types/                   # Definições TypeScript
@@ -80,12 +80,14 @@ npm run clean
 # Deepgram Configuration
 DEEPGRAM_API_KEY=your_deepgram_api_key_here
 
-# Google Gemini Configuration
-GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-3.1-flash-lite
+# AWS Bedrock Configuration
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=your_aws_access_key_id
+AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
+BEDROCK_MODEL_ID=us.anthropic.claude-3-5-haiku-20241022-v1:0
 
 # Gemini TTS Configuration
-# Uses the same GEMINI_API_KEY from Google AI Studio
+GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
 GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
 GEMINI_TTS_VOICE=Kore
 
@@ -111,15 +113,15 @@ class DeepgramService {
 }
 ```
 
-### GeminiService
+### BedrockService
 Serviço para IA conversacional:
-- **Gemini 3.1 Flash Lite** via Google Gemini
+- **Claude** via AWS Bedrock
 - **Contexto conversacional** mantido
 - **System prompts** customizáveis
 - **Rate limiting** interno
 
 ```typescript
-class GeminiService {
+class BedrockService {
   async generateResponse(userMessage: string, sessionId?: string): Promise<AIResponse>
   async testConnection(): Promise<boolean>
   clearConversation(sessionId: string): void
@@ -253,13 +255,13 @@ GET /api/status  # Status detalhado com configurações
 ```
 Frontend Audio → WebSocket → Deepgram → Transcription
                                 ↓
-Frontend ← TTS Audio ← Gemini TTS ← AI Response ← Gemini
+Frontend ← TTS Audio ← Gemini TTS ← AI Response ← Bedrock Claude
 ```
 
 ### Pipeline Detalhado
 1. **Audio Capture**: Frontend envia chunks de áudio
 2. **STT Processing**: Deepgram processa e retorna transcrição
-3. **AI Processing**: Gemini gera resposta inteligente
+3. **AI Processing**: Claude gera resposta inteligente
 4. **TTS Processing**: Gemini TTS converte resposta em áudio
 5. **Audio Playback**: Frontend reproduz áudio da resposta
 
@@ -303,7 +305,7 @@ logger.info('🎤 Audio chunk received', {
   sessionId
 })
 
-logger.info('🤖 Gemini response generated', {
+logger.info('🤖 Claude response generated', {
   responseLength: response.text.length,
   sessionId
 })
@@ -318,8 +320,8 @@ logger.info('🤖 Gemini response generated', {
 
 ### Health Checks Automáticos
 - **Deepgram**: Teste de conectividade na inicialização
-- **Google Gemini**: Validação de credenciais
-- **Gemini TTS**: Validação do modelo de voz configurado
+- **AWS Bedrock**: Validação de credenciais
+- **Gemini TTS**: Validação do modelo e da voz configurados
 
 ### Monitoramento
 - **Memory usage** tracking

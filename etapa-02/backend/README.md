@@ -1,17 +1,17 @@
 # 🖥️ Backend - Etapa 02: IA Conversacional
 
-Servidor evoluído com integração de Gemini para adicionar inteligência conversacional às transcrições de áudio.
+Servidor evoluído com integração de AWS Bedrock Claude para adicionar inteligência conversacional às transcrições de áudio.
 
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3.3-blue)
-![Google Gemini](https://img.shields.io/badge/Google%20Gemini-API-blue)
+![AWS Bedrock](https://img.shields.io/badge/AWS%20Bedrock-Claude-orange)
 ![Etapa](https://img.shields.io/badge/Etapa-02-blue)
 
 ## 🎯 Objetivo desta Etapa
 
 Evolução da **Etapa 01** adicionando:
 - ✅ Todas as funcionalidades da Etapa 01 (WebSocket + Deepgram)
-- ✅ Integração com Gemini via Google AI Studio
+- ✅ Integração com AWS Bedrock Claude
 - ✅ Pipeline completo: STT → IA → Frontend
 - ✅ Contexto conversacional mantido
 
@@ -24,7 +24,7 @@ Evolução da **Etapa 01** adicionando:
 - Sistema de segurança
 
 **Novo na Etapa 02:**
-- **@google/genai SDK** - Acesso ao Gemini 3.1 Flash Lite
+- **AWS Bedrock SDK** - Acesso ao Claude
 - **Conversation management** - Contexto entre mensagens
 - **AI response pipeline** - Fluxo STT → AI
 
@@ -39,12 +39,12 @@ backend/
 │   │   └── security.ts              # Segurança
 │   ├── services/
 │   │   ├── DeepgramService.ts       # STT (igual Etapa 01)
-│   │   ├── GeminiService.ts        # 🆕 IA Conversacional
+│   │   ├── BedrockService.ts        # 🆕 IA Conversacional
 │   │   └── SocketService.ts         # 🆕 Pipeline STT → AI
 │   ├── types/
 │   │   └── index.ts                 # 🆕 Tipos AI adicionados
 │   ├── utils/
-│   │   ├── config.ts                # 🆕 config Gemini
+│   │   ├── config.ts                # 🆕 Config AWS
 │   │   └── logger.ts                # Logging
 │   └── server.ts                    # Servidor principal
 ├── dist/
@@ -70,9 +70,11 @@ npm run type-check  # Verificar tipos
 # Deepgram Configuration (da Etapa 01)
 DEEPGRAM_API_KEY=your_deepgram_api_key_here
 
-# 🆕 Google Gemini Configuration
-GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-3.1-flash-lite
+# 🆕 AWS Bedrock Configuration
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=your_aws_access_key_id
+AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
+BEDROCK_MODEL_ID=us.anthropic.claude-3-5-haiku-20241022-v1:0
 
 # Server Configuration
 PORT=3001
@@ -80,27 +82,27 @@ CORS_ORIGIN=http://localhost:8080
 NODE_ENV=development
 ```
 
-### Setup Google Gemini
-1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Clique em **Create API key**
-3. Crie ou selecione um projeto Google
-4. Copie a chave para `GEMINI_API_KEY`
-5. Configure `GEMINI_MODEL=gemini-3.1-flash-lite` no `.env`
+### Setup AWS Bedrock
+1. Acesse [AWS Console](https://console.aws.amazon.com)
+2. Habilite **Amazon Bedrock** na região us-east-1
+3. Configure acesso ao **Claude**
+4. Crie credenciais IAM com permissões Bedrock
+5. Adicione credenciais ao `.env`
 
 ## 🧠 Serviços (Novos/Atualizados)
 
-### GeminiService (Novo)
+### BedrockService (Novo)
 **Responsável pela IA conversacional:**
 
 ```typescript
-class GeminiService {
+class BedrockService {
   // Gera resposta inteligente
   async generateResponse(
     userMessage: string,
     sessionId?: string
   ): Promise<AIResponse>
 
-  // Testa conectividade Gemini
+  // Testa conectividade AWS
   async testConnection(): Promise<boolean>
 
   // Limpa contexto da conversa
@@ -112,7 +114,7 @@ class GeminiService {
 ```
 
 **Características:**
-- **Gemini 3.1 Flash Lite** - Modelo de última geração
+- **Claude** - Modelo de última geração
 - **Contexto conversacional** - Memória entre mensagens
 - **System prompts** - Personalidade e comportamento
 - **Session management** - Conversas isoladas por usuário
@@ -130,7 +132,7 @@ class SocketService {
 
     // 2. 🆕 Generate AI response
     if (!transcription.isInterim) {
-      const aiResponse = await GeminiService.generateResponse(
+      const aiResponse = await bedrockService.generateResponse(
         transcription.text,
         socket.id
       )
@@ -141,7 +143,7 @@ class SocketService {
 ```
 
 **Funcionalidades Expandidas:**
-- **Dual service integration** - Deepgram + Gemini
+- **Dual service integration** - Deepgram + Bedrock
 - **Pipeline automation** - Fluxo automático STT → AI
 - **Session isolation** - Contexto por socket
 - **Error handling** robusto para ambos serviços
@@ -197,7 +199,7 @@ socket.emit('error', {
 ```
 Frontend Audio → WebSocket → Deepgram → Transcription → Frontend
                                   ↓
-                            GeminiService
+                            BedrockService
                                   ↓
                             AI Response → Frontend
 ```
@@ -207,7 +209,7 @@ Frontend Audio → WebSocket → Deepgram → Transcription → Frontend
 2. **STT Processing**: Deepgram transcreve áudio
 3. **Transcription Event**: Resultado enviado ao frontend
 4. **🆕 AI Trigger**: Se transcription.isInterim === false
-5. **🆕 AI Processing**: Gemini gera resposta
+5. **🆕 AI Processing**: Bedrock Claude gera resposta
 6. **🆕 AI Response Event**: Resposta enviada ao frontend
 
 ## 🧠 Sistema de Conversação
@@ -260,16 +262,16 @@ logger.info('✅ AI response generated', {
 ### Health Checks Atualizados
 ```bash
 GET /health      # Status básico
-GET /ready       # Testa Deepgram + Gemini
-GET /api/status  # Status com config Gemini
+GET /ready       # Testa Deepgram + Bedrock
+GET /api/status  # Status com config AWS
 ```
 
 ## 🔒 Segurança (Atualizada)
 
-### Gemini API Key
-- **Chave da Gemini API** mantida apenas no backend
-- **Modelo configurável** via `GEMINI_MODEL`
-- **System prompt** customizável em `src/prompts/system-prompt.txt`
+### AWS Credentials
+- **IAM credentials** com permissões mínimas
+- **Region lock** - Apenas us-east-1
+- **Model access** - Específico para Claude
 
 ### Rate Limiting Específico
 ```typescript
@@ -286,14 +288,14 @@ const aiRateLimit = {
 ### Conectividade Dupla
 ```typescript
 // Testa ambos serviços na inicialização
-const [deepgramOk, geminiOk] = await Promise.all([
+const [deepgramOk, bedrockOk] = await Promise.all([
   socketService.testDeepgramConnection(),
-  GeminiService.testConnection()
+  bedrockService.testConnection()
 ])
 
 logger.info('🔍 Services status', {
   deepgram: deepgramOk ? '✅' : '❌',
-  gemini: geminiOk ? '✅' : '❌'
+  bedrock: bedrockOk ? '✅' : '❌'
 })
 ```
 
@@ -302,11 +304,12 @@ logger.info('🔍 Services status', {
 # Endpoint com status completo
 curl http://localhost:3001/api/status
 
-# Response inclui status Gemini
+# Response inclui status AWS
 {
   "service": "Conversational Agent Backend",
   "deepgram": "connected",
-  "gemini": "connected"
+  "bedrock": "connected",
+  "aws_region": "us-east-1"
 }
 ```
 
@@ -314,10 +317,10 @@ curl http://localhost:3001/api/status
 
 ### Novos Conceitos da Etapa 02
 
-**1. Google Gemini Integration**
+**1. AWS Bedrock Integration**
 - SDK usage e authentication
-- Gemini model invocation
-- Error handling Gemini específico
+- Claude model invocation
+- Error handling AWS específico
 
 **2. Conversational AI Patterns**
 - Context management entre mensagens
@@ -338,17 +341,17 @@ curl http://localhost:3001/api/status
 
 ### Problemas Comuns
 
-**1. Gemini API Key**
+**1. AWS Credentials**
 ```
 Error: AccessDeniedException
 ```
-Solução: Verificar permissões da chave da Gemini API para Gemini
+Solução: Verificar IAM permissions para Bedrock
 
 **2. Model Access**
 ```
 Error: ModelNotReadyException
 ```
-Solução: Habilitar Gemini no Gemini Console
+Solução: Habilitar Claude no Bedrock Console
 
 **3. Rate Limiting**
 ```
@@ -361,7 +364,7 @@ Solução: Implementar retry com backoff
 🔌 Client connected: socket-abc123
 🎤 Audio chunk: 1024 bytes
 📝 Transcription: "olá assistente" (final)
-🤖 AI request sent to Gemini
+🤖 AI request sent to Bedrock
 ✅ AI response: "Olá! Como posso ajudá-lo?"
 ```
 
@@ -369,7 +372,7 @@ Solução: Implementar retry com backoff
 
 Esta etapa prepara para:
 
-**Etapa 03**: Adicionar Gemini TTS para conversa 100% por voz
+**Etapa 03**: Adicionar Gemini TTS Text-to-Speech para conversa 100% por voz
 
 ### Diferenças para Etapa 03
 - Etapa 02: **STT → AI → Texto**
@@ -377,9 +380,9 @@ Esta etapa prepara para:
 
 ## 🎯 Conceitos-Chave Aprendidos
 
-1. **Multi-Service Integration**: Orquestração Deepgram + Google Gemini
+1. **Multi-Service Integration**: Orquestração Deepgram + AWS Bedrock
 2. **Conversational Context**: Gestão de contexto entre mensagens
-3. **Google AI Studio**: Integração com Gemini
+3. **AWS Cloud Services**: Integração com Bedrock Claude
 4. **Advanced Pipeline**: Fluxo STT → AI → Response
 5. **Session Management**: Isolamento de conversas por usuário
 

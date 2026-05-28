@@ -7,7 +7,7 @@ Na etapa 03, o frontend exibe a conversa completa e reproduz o áudio gerado pel
 - Reprodução automática das respostas em áudio
 - Player de áudio integrado
 - Tratamento de eventos `tts-audio` e `tts-error`
-- Experiência completa STT → Gemini → TTS
+- Experiência completa STT → Bedrock → Gemini TTS
 
 ## Comandos
 
@@ -24,4 +24,3 @@ npm run dev
 - `src/hooks/useWebSocket.ts`
 - `src/components/AudioRecorder.tsx`
 - `src/components/TranscriptionDisplay.tsx`
-

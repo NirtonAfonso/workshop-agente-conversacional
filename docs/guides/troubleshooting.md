@@ -100,44 +100,53 @@ Guia completo para resolver problemas comuns durante o workshop.
    DEEPGRAM_API_KEY=sua_chave_sem_aspas
    ```
 
-### Google Gemini Access Denied
+### AWS Bedrock Access Denied
 
-**Erro comum**: erro de autenticação ou chave inválida na Gemini API
-
-**Soluções**:
-
-1. **Verificar chave**
-   ```text
-   GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-   ```
-
-2. **Verificar modelo**
-   ```text
-   GEMINI_MODEL=gemini-3.1-flash-lite
-   ```
-
-3. **Gerar uma nova chave**
-   - Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
-   - Clique em **Create API key**
-   - Atualize o `.env` e reinicie o backend
-
-### Gemini TTS não gera áudio
-
-**Erro comum**: erro de autenticação, modelo indisponível ou cota excedida na Gemini API
+**Erro comum**: `AccessDeniedException`
 
 **Soluções**:
 
-1. **Verificar configuração**
+1. **Verificar região**
    ```text
-   GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-   GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
-   GEMINI_TTS_VOICE=Kore
+   AWS_REGION=us-east-1  # Obrigatório para Claude
    ```
 
-2. **Verificar acesso e cota**
-   - Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
-   - Confirme se a chave está ativa
-   - Verifique limites e billing da sua conta
+2. **Verificar model access**
+   - AWS Console → Bedrock → Model access
+   - Habilitar Claude 3.5 Haiku
+
+3. **Verificar IAM permissions**
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Action": [
+           "bedrock:InvokeModel",
+           "bedrock:ListFoundationModels"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+### Gemini TTS Rate Limit
+
+**Erro comum**: `429 Too Many Requests`
+
+**Soluções**:
+
+1. **Verificar plano**
+   - Plano gratuito: cota gratuita conforme limites atuais da Gemini API
+   - Upgrade se necessário
+
+2. **Implementar retry**
+   ```typescript
+   // Já implementado no backend
+   await new Promise(resolve => setTimeout(resolve, 1000))
+   ```
 
 ## 🖥️ Problemas do Backend
 

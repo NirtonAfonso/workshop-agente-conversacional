@@ -25,8 +25,11 @@ Configure secrets no provedor de deploy:
 
 ```text
 DEEPGRAM_API_KEY=...
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...
+BEDROCK_MODEL_ID=us.anthropic.claude-3-5-haiku-20241022-v1:0
 GEMINI_API_KEY=...
-GEMINI_MODEL=gemini-3.1-flash-lite
 GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
 GEMINI_TTS_VOICE=Kore
 CORS_ORIGIN=https://seu-frontend.com
@@ -36,7 +39,7 @@ CORS_ORIGIN=https://seu-frontend.com
 
 - Nunca exponha chaves no frontend.
 - Configure CORS para o domínio real.
-- Monitore limites de Deepgram, Gemini e Gemini TTS.
+- Monitore limites de Deepgram, AWS Bedrock e Gemini TTS.
 
 ## Publicar o site no GitHub Pages
 

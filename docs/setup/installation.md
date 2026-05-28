@@ -8,6 +8,11 @@ Guia completo para instalar e configurar o workshop.
 # Clone o repositório
 git clone https://github.com/NirtonAfonso/workshop-agente-conversacional.git
 cd workshop-agente-conversacional
+
+# Escolha a trilha do workshop
+git checkout AWS      # Para Bedrock + Gemini TTS
+# ou
+git checkout Gemini   # Para Gemini + Gemini TTS
 ```
 
 ## 📁 Estrutura das Etapas
@@ -77,15 +82,18 @@ NODE_ENV=development
 ### 2. Etapa 02 (adicionar ao .env)
 
 ```text
-# Google Gemini Configuration
-GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-3.1-flash-lite
+# AWS Bedrock Configuration
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=sua_aws_access_key_id
+AWS_SECRET_ACCESS_KEY=sua_aws_secret_access_key
+BEDROCK_MODEL_ID=us.anthropic.claude-3-5-haiku-20241022-v1:0
 ```
 
 ### 3. Etapa 03 (adicionar ao .env)
 
 ```text
 # Gemini TTS Configuration
+GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
 GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
 GEMINI_TTS_VOICE=Kore
 ```

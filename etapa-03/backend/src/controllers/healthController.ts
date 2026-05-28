@@ -35,7 +35,8 @@ export const healthCheck = async (req: Request, res: Response) => {
         deepgramModel: serverConfig.deepgramModel,
         deepgramLanguage: serverConfig.deepgramLanguage,
         audioSampleRate: serverConfig.audioSampleRate,
-        geminiModel: serverConfig.geminiModel,
+        awsRegion: serverConfig.awsRegion,
+        bedrockModelId: serverConfig.bedrockModelId,
         geminiTtsModel: serverConfig.geminiTtsModel,
         geminiTtsVoice: serverConfig.geminiTtsVoice,
       },
@@ -43,7 +44,7 @@ export const healthCheck = async (req: Request, res: Response) => {
 
     // Test API connections
     let deepgramStatus = 'unknown';
-    let geminiStatus = 'unknown';
+    let bedrockStatus = 'unknown';
     let geminiTtsStatus = 'unknown';
 
     try {
@@ -58,12 +59,12 @@ export const healthCheck = async (req: Request, res: Response) => {
 
     try {
       if (socketService) {
-        const isConnected = await socketService.testGeminiConnection();
-        geminiStatus = isConnected ? 'connected' : 'disconnected';
+        const isConnected = await socketService.testBedrockConnection();
+        bedrockStatus = isConnected ? 'connected' : 'disconnected';
       }
     } catch (error) {
-      geminiStatus = 'error';
-      logger.error('Gemini health check failed', { error });
+      bedrockStatus = 'error';
+      logger.error('Bedrock health check failed', { error });
     }
 
     try {
@@ -82,7 +83,7 @@ export const healthCheck = async (req: Request, res: Response) => {
       ...health,
       services: {
         deepgram: deepgramStatus,
-        gemini: geminiStatus,
+        bedrock: bedrockStatus,
         geminiTts: geminiTtsStatus,
         websocket: socketService ? 'running' : 'not_initialized',
       },
@@ -106,7 +107,7 @@ export const readinessCheck = async (req: Request, res: Response) => {
     // Check if all required services are ready
     const checks = {
       deepgram: false,
-      gemini: false,
+      bedrock: false,
       geminiTts: false,
       websocket: false,
     };
@@ -115,7 +116,7 @@ export const readinessCheck = async (req: Request, res: Response) => {
     try {
       if (socketService) {
         checks.deepgram = await socketService.testDeepgramConnection();
-        checks.gemini = await socketService.testGeminiConnection();
+        checks.bedrock = await socketService.testBedrockConnection();
         checks.geminiTts = await socketService.testGeminiTtsConnection();
         checks.websocket = true;
       }

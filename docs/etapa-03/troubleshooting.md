@@ -8,8 +8,8 @@
 
 ## IA não responde
 
-- Verifique `GEMINI_API_KEY`.
-- Confirme `GEMINI_MODEL=gemini-3.1-flash-lite`.
+- Verifique `AWS_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` e `BEDROCK_MODEL_ID`.
+- Confirme se o modelo está habilitado no Amazon Bedrock.
 - Reinicie o backend.
 
 ## Transcrição não chega

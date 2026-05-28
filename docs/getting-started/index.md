@@ -105,45 +105,61 @@ curl -X GET "https://api.deepgram.com/v1/projects" \
 
 ---
 
-### 2. 🤖 Google Gemini (IA Conversacional)
+### 2. 🤖 AWS Bedrock (IA Conversacional)
 
-#### Por que Gemini?
-- 🧠 **Gemini 3.1 Flash Lite**: Modelo mais avançado
+#### Por que AWS Bedrock Claude?
+- 🧠 **Claude**: Modelo mais avançado
 - 💬 **Conversação natural** em português
 - 🔒 **Segurança enterprise**
 - 📊 **Pay-per-use** (~ $0.003/1K tokens)
 
-#### Setup da Conta no Google AI Studio
+#### Setup da Conta AWS
 
-```{admonition} Importante sobre Google AI Studio
+```{admonition} Importante sobre AWS
 :class: warning
 
-- Use uma Conta Google para acessar o Google AI Studio
-- A chave da Gemini API pode ser criada em poucos minutos
+- Requer **cartão de crédito** para verificação
+- **Região obrigatória**: us-east-1
+- **Aprovação**: Bedrock pode levar alguns minutos
 ```
 
-**Passo 1: Conta no Google AI Studio**
-1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Faça login com sua Conta Google
-3. Crie ou selecione um projeto Google
+**Passo 1: Conta AWS**
+1. Acesse [aws.amazon.com](https://aws.amazon.com)
+2. "Create AWS Account"
+3. Preencha dados + cartão de crédito
+4. Complete verificação por telefone
 
-**Passo 2: Criar chave da Gemini API**
-1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Clique em **Create API key**
-3. Crie ou selecione um projeto Google
-4. Copie a chave gerada
-5. Use o modelo `gemini-3.1-flash-lite` no `.env`
+**Passo 2: Habilitar Bedrock**
+1. Faça login no [AWS Console](https://console.aws.amazon.com)
+2. **IMPORTANTE**: Mude região para **us-east-1** (canto superior direito)
+3. Procure "Bedrock" nos serviços
+4. Vá em **"Model access"**
+5. **"Manage model access"**
+6. Habilite: **"Anthropic Claude 3.5 Haiku"**
+7. Aguarde aprovação (1-5 minutos)
 
-**Passo 3: Configurar variáveis de ambiente**
-1. Abra o arquivo `.env` do backend
-2. Adicione `GEMINI_API_KEY=sua_chave_google_ai_studio_aqui`
-3. Adicione `GEMINI_MODEL=gemini-3.1-flash-lite`
-4. Salve o arquivo e reinicie o backend
+**Passo 3: Credenciais IAM**
+1. Vá para **IAM** no console
+2. **"Users"** → **"Create user"**
+3. Nome: `bedrock-workshop-user`
+4. **"Attach policies directly"**
+5. Selecione: `AmazonBedrockFullAccess`
+6. Complete criação
+7. Clique no usuário → **"Security credentials"**
+8. **"Create access key"** → "Application running on AWS services"
+9. **Copie**: Access Key ID e Secret Access Key
 
 #### Teste Rápido
 ```bash
-# Testar acesso aos modelos Gemini
-curl "https://generativelanguage.googleapis.com/v1beta/models?key=SUA_GEMINI_API_KEY"
+# Instalar AWS CLI (opcional)
+# pip install awscli
+
+# Configurar (se instalou CLI)
+aws configure
+# Insira: Access Key, Secret Key, us-east-1, json
+
+# Teste via CLI
+aws bedrock list-foundation-models --region us-east-1
 ```
 
 ---
@@ -151,21 +167,23 @@ curl "https://generativelanguage.googleapis.com/v1beta/models?key=SUA_GEMINI_API
 ### 3. 🔊 Gemini TTS (Text-to-Speech)
 
 #### Por que Gemini TTS?
-- 🎵 **Síntese de voz** pela mesma Gemini API
+- 🎵 **Qualidade excepcional** de voz
 - 🇧🇷 **Português natural**
-- ⚡ **Integração simples** com a chave do Google AI Studio
-- 🔧 **Menos serviços externos** para configurar
+- ⚡ **Latência baixa**
+- 🆓 cota gratuita disponível conforme limites atuais da Gemini API
 
 #### Setup da Conta
 
 **Passo 1: Chave da Gemini API**
-1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Crie ou reutilize a chave configurada em `GEMINI_API_KEY`
+1. Acesse [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)
+2. Faça login com sua Conta Google
+3. Clique em **Create API key**
+4. Copie a chave para `GEMINI_API_KEY`
 
-**Passo 2: Modelo de voz**
-1. Configure `GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview`
-2. Configure `GEMINI_TTS_VOICE=Kore`
-3. Troque a voz se quiser usar outra voz suportada pela Gemini API
+**Passo 2: Modelo e voz**
+1. Configure `GEMINI_TTS_VOICE=Kore`
+2. Troque `Kore` por outra voz suportada pela Gemini API se desejar
+3. Configure `GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview`
 
 #### Teste Rápido
 ```bash
@@ -183,6 +201,11 @@ curl "https://generativelanguage.googleapis.com/v1beta/models?key=SUA_GEMINI_API
 # Clone o projeto
 git clone https://github.com/NirtonAfonso/workshop-agente-conversacional.git
 cd workshop-agente-conversacional
+
+# Escolha a trilha do workshop
+git checkout AWS      # Para Bedrock + Gemini TTS
+# ou
+git checkout Gemini   # Para Gemini + Gemini TTS
 
 # Explore a estrutura
 ls -la
@@ -250,8 +273,8 @@ npm run dev
 
 ### 🔑 APIs Configuradas
 - [ ] **Deepgram**: Conta criada + API key obtida + teste passou
-- [ ] **Google Gemini**: Conta Google AI Studio + chave da Gemini API configurada
-- [ ] **Gemini TTS**: `GEMINI_TTS_MODEL` e `GEMINI_TTS_VOICE` configurados
+- [ ] **AWS Bedrock**: Conta AWS + Bedrock habilitado + IAM configurado
+- [ ] **Gemini TTS**: `GEMINI_API_KEY`, `GEMINI_TTS_MODEL` e `GEMINI_TTS_VOICE` configurados
 
 ### 🎯 Projeto Funcionando
 - [ ] Repositório clonado
@@ -336,7 +359,7 @@ Durante o workshop completo, você gastará aproximadamente:
 | Serviço | Uso Estimado | Custo |
 |---------|--------------|-------|
 | **Deepgram** | ~30 min de áudio | $1.05 |
-| **Google Gemini** | ~500 requests | $2.50 |
+| **AWS Bedrock** | ~500 requests | $2.50 |
 | **Gemini TTS** | ~5000 caracteres de resposta | Conforme limites/preços atuais da Gemini API |
 | **Total** | | Depende do uso e dos limites atuais das APIs |
 
@@ -344,7 +367,8 @@ Durante o workshop completo, você gastará aproximadamente:
 :class: note
 
 - **Deepgram**: $150 gratuitos
-- **Google AI Studio**: cota gratuita disponível conforme limites atuais da Gemini API
+- **Gemini TTS**: cota gratuita conforme limites atuais da Gemini API
+- **AWS**: Free tier para novos usuários
 
 O workshop pode ser feito **completamente gratuito**!
 ```

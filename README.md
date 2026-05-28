@@ -1,13 +1,13 @@
 # 🎤 Workshop Agente Conversacional
 
-Um workshop completo demonstrando como criar um agente conversacional inteligente que captura áudio em tempo real, transcreve com Deepgram, gera respostas inteligentes com Gemini e converte texto em voz com Gemini TTS.
+Um workshop completo demonstrando como criar um agente conversacional inteligente que captura áudio em tempo real, transcreve com Deepgram, gera respostas inteligentes com AWS Bedrock Claude e converte texto em voz com Gemini TTS.
 
 ![Status](https://img.shields.io/badge/status-pronto-brightgreen)
 ![React](https://img.shields.io/badge/React-18.3.1-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-blue)
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green)
 ![Deepgram](https://img.shields.io/badge/Deepgram-API-purple)
-![Google Gemini](https://img.shields.io/badge/Google%20Gemini-API-blue)
+![AWS Bedrock](https://img.shields.io/badge/AWS%20Bedrock-Claude-orange)
 ![Gemini TTS](https://img.shields.io/badge/Gemini TTS-TTS-red)
 
 ## 📋 Índice
@@ -18,8 +18,19 @@ Um workshop completo demonstrando como criar um agente conversacional inteligent
 - [Instalação e Configuração](#instalação-e-configuração)
 - [Como Usar](#como-usar)
 - [Funcionalidades](#funcionalidades)
+- [Branches do Workshop](#branches-do-workshop)
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [Licença](#licença)
+
+## 🌿 Branches do Workshop
+
+Este repositório tem duas trilhas para os alunos:
+
+- **Branch `AWS`**: usa **AWS Bedrock Claude** para a IA conversacional e **Gemini TTS** para voz.
+- **Branch `Gemini`**: usa **Google AI Studio/Gemini** para a IA conversacional e **Gemini TTS** para voz.
+
+Se você está seguindo o tutorial de Bedrock, use `git checkout AWS`.
+Se você está seguindo o tutorial de Gemini, use `git checkout Gemini`.
 
 ## 🚀 Sobre o Projeto
 
@@ -27,7 +38,7 @@ Este workshop apresenta uma implementação completa de um agente conversacional
 
 - **🎤 Captura áudio** em tempo real do microfone do usuário
 - **📝 Transcreve automaticamente** usando a API do Deepgram (Speech-to-Text)
-- **🤖 Gera respostas inteligentes** usando Gemini via Google AI Studio
+- **🤖 Gera respostas inteligentes** usando AWS Bedrock Claude
 - **🔊 Converte respostas em áudio** usando Gemini TTS (Text-to-Speech)
 - **💬 Mantém conversação natural** com contexto e memória
 - **⚡ Funciona em tempo real** com WebSocket para comunicação instantânea
@@ -36,7 +47,7 @@ Este workshop apresenta uma implementação completa de um agente conversacional
 
 - Captura e processamento de áudio no navegador com Web Audio API
 - Comunicação em tempo real com WebSocket (Socket.io)
-- Integração com APIs de IA modernas (Deepgram, Google Gemini, Gemini TTS)
+- Integração com APIs de IA modernas (Deepgram, AWS Bedrock, Gemini TTS)
 - Desenvolvimento fullstack com React + TypeScript e Node.js + TypeScript
 - Criação de interfaces modernas e responsivas com Radix UI e Tailwind CSS
 - Arquitetura de aplicações conversacionais
@@ -56,8 +67,8 @@ Este workshop apresenta uma implementação completa de um agente conversacional
 - **Express.js** - Framework web minimalista e flexível
 - **Socket.io** - WebSocket para comunicação bidirecional
 - **Deepgram SDK** - Speech-to-Text em tempo real
-- **Google Gemini** - Acesso ao Gemini 3.1 Flash Lite para IA conversacional
-- **Gemini TTS** - Text-to-Speech via Google AI Studio
+- **AWS Bedrock** - Acesso ao Claude para IA conversacional
+- **Gemini TTS** - Text-to-Speech de alta qualidade
 
 ### Segurança & DevEx
 - **Helmet** - Headers de segurança
@@ -76,7 +87,8 @@ Antes de começar, você precisará de:
 
 ### Contas e Chaves de API
 - **Conta no Deepgram** ([criar conta gratuita](https://deepgram.com))
-- **Conta no Google AI Studio** com chave da Gemini API ([criar chave](https://aistudio.google.com/app/apikey))
+- **Conta AWS** com acesso ao Bedrock Claude ([configurar acesso](https://docs.aws.amazon.com/bedrock/))
+- **Conta no Google AI Studio** com chave da Gemini API para TTS ([criar chave](https://aistudio.google.com/app/apikey))
 
 > **💡 Dica**: Todas as plataformas oferecem créditos gratuitos para teste!
 
@@ -109,11 +121,14 @@ Crie um arquivo `.env` na pasta `etapa-03/backend/`:
 # Deepgram (Speech-to-Text)
 DEEPGRAM_API_KEY=sua_chave_deepgram_aqui
 
-# Google Gemini (IA Conversacional)
-GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-3.1-flash-lite
+# AWS Bedrock (IA Conversacional)
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=sua_aws_access_key
+AWS_SECRET_ACCESS_KEY=sua_aws_secret_key
+BEDROCK_MODEL_ID=us.anthropic.claude-3-5-haiku-20241022-v1:0
 
-# Gemini TTS (Text-to-Speech via Google AI Studio)
+# Gemini TTS (Text-to-Speech)
+GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
 GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
 GEMINI_TTS_VOICE=Kore
 
@@ -130,16 +145,16 @@ NODE_ENV=development
 2. Crie uma conta ou faça login
 3. Navegue até **API Keys** e crie uma nova chave
 
-#### Google Gemini
-1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Crie uma chave de API para usar a Gemini API
-3. Copie a chave e use em GEMINI_API_KEY no arquivo .env
+#### AWS Bedrock
+1. Acesse [AWS Console](https://console.aws.amazon.com)
+2. Configure acesso ao Bedrock Claude na região us-east-1
+3. Crie credenciais IAM com permissões para Bedrock
 
 #### Gemini TTS
 1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Use a mesma chave configurada em `GEMINI_API_KEY`
+2. Crie ou reutilize sua chave da Gemini API
 3. Configure `GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview`
-4. Configure `GEMINI_TTS_VOICE=Kore` ou outra voz suportada pelo Gemini TTS
+4. Configure `GEMINI_TTS_VOICE=Kore` ou outra voz suportada
 
 ## 🚀 Como Usar
 
@@ -163,7 +178,7 @@ Abra seu navegador e acesse: `http://localhost:8080`
 1. **🎤 Inicie a gravação**: Clique no botão "Iniciar Gravação"
 2. **🔓 Permita acesso**: Autorize o uso do microfone
 3. **💬 Converse naturalmente**: Fale em português - sua voz será transcrita em tempo real
-4. **🤖 Receba respostas**: O Gemini gerará respostas inteligentes automaticamente
+4. **🤖 Receba respostas**: O Claude gerará respostas inteligentes automaticamente
 5. **🔊 Ouça as respostas**: As respostas são convertidas em áudio e reproduzidas
 6. **🔄 Continue a conversa**: Mantenha um diálogo natural e fluido
 7. **⏹️ Pare quando quiser**: Clique em "Parar Gravação" para finalizar
@@ -200,7 +215,7 @@ workshop-agente-conversacional/
 │       │   ├── middleware/  # Security & validation
 │       │   ├── services/
 │       │   │   ├── DeepgramService.ts    # STT
-│       │   │   ├── GeminiService.ts     # IA
+│       │   │   ├── BedrockService.ts     # IA
 │       │   │   ├── GeminiTTSService.ts  # TTS
 │       │   │   └── SocketService.ts      # WebSocket
 │       │   ├── types/       # TypeScript definitions
@@ -226,7 +241,7 @@ workshop-agente-conversacional/
 
 ### 🧠 Inteligência Artificial
 - ✅ **Speech-to-Text**: Transcrição em tempo real com Deepgram (português brasileiro)
-- ✅ **IA Conversacional**: Respostas inteligentes com Gemini via Google AI Studio
+- ✅ **IA Conversacional**: Respostas inteligentes com AWS Bedrock Claude
 - ✅ **Text-to-Speech**: Síntese de voz natural com Gemini TTS
 - ✅ Manutenção de contexto conversacional
 
@@ -255,7 +270,7 @@ Este workshop está organizado em 3 etapas progressivas:
 - Interface básica
 
 ### 📁 Etapa 02 - IA Conversacional
-- Adição do Gemini
+- Adição do AWS Bedrock Claude
 - Respostas inteligentes
 - Contexto conversacional
 
@@ -270,12 +285,6 @@ Este workshop está organizado em 3 etapas progressivas:
 ## 📄 Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-## 🌐 Site da Documentação
-
-O site em `docs/` é publicado pelo workflow `.github/workflows/docs.yml`.
-No GitHub, vá em **Settings > Pages** e selecione **GitHub Actions** como fonte.
-Em seguida, faça push na branch `main` ou `master`; o workflow compila o Sphinx e publica o site no GitHub Pages.
 
 ---
 

@@ -9,11 +9,10 @@
 
 ## Configurar `.env`
 
-Use a mesma chave da Gemini API para texto e voz:
+Nesta branch AWS, use a chave da Gemini API para gerar apenas a voz da resposta:
 
 ```text
 GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-3.1-flash-lite
 GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
 GEMINI_TTS_VOICE=Kore
 ```
@@ -22,4 +21,4 @@ GEMINI_TTS_VOICE=Kore
 
 - O Gemini TTS retorna áudio PCM; o backend converte esse áudio para WAV antes de enviar ao frontend.
 - A voz padrão configurada é `Kore`, mas você pode trocar por outra voz suportada pela Gemini API.
-- A etapa 03 agora usa apenas Deepgram e Google AI Studio/Gemini no backend.
+- Nesta branch, a etapa 03 usa Deepgram para STT, AWS Bedrock para IA conversacional e Gemini TTS para voz.

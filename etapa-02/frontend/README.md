@@ -1,6 +1,6 @@
 # 🎨 Frontend - Etapa 02: IA Conversacional
 
-Interface evoluída com integração de IA conversacional, adicionando respostas inteligentes do Gemini às transcrições.
+Interface evoluída com integração de IA conversacional, adicionando respostas inteligentes do AWS Bedrock Claude às transcrições.
 
 ![React](https://img.shields.io/badge/React-18.3.1-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-blue)
@@ -10,7 +10,7 @@ Interface evoluída com integração de IA conversacional, adicionando respostas
 
 Evolução da **Etapa 01** adicionando:
 - ✅ Todas as funcionalidades da Etapa 01 (áudio + transcrição)
-- ✅ Respostas inteligentes da IA (Gemini)
+- ✅ Respostas inteligentes da IA (AWS Bedrock Claude)
 - ✅ Interface conversacional aprimorada
 - ✅ Exibição diferenciada para mensagens de usuário vs IA
 

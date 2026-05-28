@@ -1,6 +1,6 @@
 # 🎤 Workshop Agente Conversacional
 
-Um workshop completo demonstrando como criar um agente conversacional inteligente que captura áudio em tempo real, transcreve com Deepgram, gera respostas inteligentes com Gemini e converte texto em voz com Gemini TTS.
+Um workshop completo demonstrando como criar um agente conversacional inteligente que captura áudio em tempo real, transcreve com Deepgram, gera respostas inteligentes com AWS Bedrock Claude e converte texto em voz com Gemini TTS.
 
 ![Status](https://img.shields.io/badge/status-pronto-brightgreen)
 ![React](https://img.shields.io/badge/React-18.3.1-blue)
@@ -13,10 +13,19 @@ Este workshop apresenta uma implementação completa de um agente conversacional
 
 - **🎤 Captura áudio** em tempo real do microfone do usuário
 - **📝 Transcreve automaticamente** usando a API do Deepgram (Speech-to-Text)
-- **🤖 Gera respostas inteligentes** usando Gemini via Google AI Studio
+- **🤖 Gera respostas inteligentes** usando AWS Bedrock Claude
 - **🔊 Converte respostas em áudio** usando Gemini TTS (Text-to-Speech)
 - **💬 Mantém conversação natural** com contexto e memória
 - **⚡ Funciona em tempo real** com WebSocket para comunicação instantânea
+
+## 🌿 Branches do Workshop
+
+Use a branch correta antes de começar:
+
+- **`AWS`**: IA conversacional com AWS Bedrock Claude e voz com Gemini TTS.
+- **`Gemini`**: IA conversacional com Google AI Studio/Gemini e voz com Gemini TTS.
+
+Veja o guia [Branches do Workshop](branches.md) para escolher a trilha certa.
 
 ## 📋 Estrutura do Workshop
 
@@ -25,6 +34,7 @@ Este workshop apresenta uma implementação completa de um agente conversacional
 :caption: Workshop Completo
 
 introduction/index
+branches
 getting-started/index
 etapa-01/index
 etapa-02/index
@@ -56,7 +66,7 @@ setup/configuration
 
 - Captura e processamento de áudio no navegador com Web Audio API
 - Comunicação em tempo real com WebSocket (Socket.io)
-- Integração com APIs de IA modernas (Deepgram, Google Gemini, Gemini TTS)
+- Integração com APIs de IA modernas (Deepgram, AWS Bedrock, Gemini TTS)
 - Desenvolvimento fullstack com React + TypeScript e Node.js + TypeScript
 - Criação de interfaces modernas e responsivas com Radix UI e Tailwind CSS
 - Arquitetura de aplicações conversacionais

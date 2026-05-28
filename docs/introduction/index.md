@@ -27,7 +27,7 @@ graph TB
 ### ✨ Funcionalidades Implementadas
 
 - **🎤 Reconhecimento de Voz**: Transcrição em tempo real com Deepgram
-- **🧠 IA Conversacional**: Respostas inteligentes com Gemini
+- **🧠 IA Conversacional**: Respostas inteligentes com AWS Bedrock Claude
 - **🔊 Síntese de Voz**: Audio natural com Gemini TTS
 - **💬 Interface Moderna**: React + TypeScript + Tailwind CSS
 - **⚡ Tempo Real**: Comunicação WebSocket bidirecional
@@ -54,7 +54,7 @@ graph TB
 
 **Recomendados:**
 - Web Audio API (vamos ensinar!)
-- APIs de IA básico
+- AWS básico
 - Docker (opcional)
 ```
 
@@ -63,7 +63,7 @@ graph TB
 Ao completar este workshop, você será capaz de:
 
 ### 🔧 Técnico
-1. **Integrar múltiplas APIs de IA** (Deepgram, Google Gemini, Gemini TTS)
+1. **Integrar múltiplas APIs de IA** (Deepgram, AWS Bedrock, Gemini TTS)
 2. **Processar áudio em tempo real** com Web Audio API
 3. **Implementar comunicação WebSocket** para streaming
 4. **Construir interfaces conversacionais** modernas
@@ -110,7 +110,7 @@ graph LR
 | **Introdução** | 15 min | Visão geral e objetivos |
 | **Getting Started** | 15 min | Setup e configuração de contas |
 | **Etapa 01** | 15 min | Transcrição básica com Deepgram |
-| **Etapa 02** | 15 min | IA conversacional com Gemini |
+| **Etapa 02** | 15 min | IA conversacional com Claude |
 | **Etapa 03** | 15 min | TTS completo com Gemini TTS |
 | **Challenge** | 5 min | Extensões e melhorias |
 | **Wrap-up** | 10 min | Revisão e próximos passos |
@@ -130,7 +130,7 @@ graph TB
     subgraph "🌐 Backend (Node.js + TypeScript)"
         E[📡 WebSocket Server] --> F[🎵 Audio Processing]
         F --> G[📝 Deepgram STT]
-        F --> H[🤖 Gemini]
+        F --> H[🤖 AWS Bedrock Claude]
         F --> I[🔊 Gemini TTS]
     end
 

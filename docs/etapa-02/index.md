@@ -5,12 +5,12 @@
 
 ## 🎯 Objetivo
 
-Segunda etapa que adiciona **inteligência conversacional** às transcrições usando Gemini.
+Segunda etapa que adiciona **inteligência conversacional** às transcrições usando AWS Bedrock Claude.
 
 ## ✨ Funcionalidades
 
 - **🎤 Tudo da Etapa 01** (áudio + transcrição)
-- **🤖 IA Conversacional** com Gemini via Google AI Studio
+- **🤖 IA Conversacional** com AWS Bedrock Claude
 - **💬 Interface de chat** inteligente
 - **🧠 Contexto conversacional** mantido
 
@@ -26,7 +26,7 @@ graph TB
     subgraph "🌐 Backend (Node.js + TypeScript)"
         D[📡 WebSocket Server] --> E[🎵 Audio Processing]
         E --> F[📝 Deepgram STT]
-        E --> G[🤖 Gemini]
+        E --> G[🤖 AWS Bedrock Claude]
     end
 
     B <--> D
@@ -44,29 +44,30 @@ graph TB
 
 ### Pré-requisitos
 - Tudo da Etapa 01
-- Conta no Google AI Studio com acesso ao Gemini
+- Conta AWS com acesso ao Bedrock
 
 ### Configuração Adicional
 
 Adicione ao `.env` do backend:
 
 ```text
-# Google Gemini Configuration
-GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-3.1-flash-lite
+# AWS Bedrock Configuration
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=sua_aws_access_key
+AWS_SECRET_ACCESS_KEY=sua_aws_secret_key
+BEDROCK_MODEL_ID=us.anthropic.claude-3-5-haiku-20241022-v1:0
 ```
 
-### Setup Google Gemini
+### Setup AWS Bedrock
 
-1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Clique em **Create API key**
-3. Crie ou selecione um projeto Google
-4. Copie a chave para `GEMINI_API_KEY`
-5. Use `GEMINI_MODEL=gemini-3.1-flash-lite`
+1. Acesse [AWS Console](https://console.aws.amazon.com)
+2. Habilite Amazon Bedrock na região us-east-1
+3. Configure acesso ao Claude
+4. Crie credenciais IAM com permissões Bedrock
 
 ## 🎓 O que Você Aprende (Novo)
 
-1. **Google Gemini Integration** - Acesso ao Gemini via API
+1. **AWS Bedrock Integration** - Acesso ao Claude via API
 2. **Conversational AI** - Contexto entre mensagens
 3. **Service Orchestration** - Pipeline STT → AI
 4. **Chat Interface** - UI conversacional moderna
@@ -75,8 +76,8 @@ GEMINI_MODEL=gemini-3.1-flash-lite
 ## 🔄 Fluxo Conversacional
 
 1. **Usuário fala** → Transcrição em tempo real
-2. **Texto transcrito** → Enviado para Gemini
-3. **Gemini processa** → Gera resposta inteligente
+2. **Texto transcrito** → Enviado para Claude
+3. **Claude processa** → Gera resposta inteligente
 4. **Resposta exibida** → Interface de chat
 5. **Contexto mantido** → Conversa fluida
 
@@ -87,7 +88,7 @@ GEMINI_MODEL=gemini-3.1-flash-lite
 
 frontend
 backend
-gemini-setup
+aws-setup
 troubleshooting
 ```
 

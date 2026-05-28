@@ -29,7 +29,7 @@ graph TB
     subgraph "🌐 Backend (Node.js + TypeScript)"
         E[📡 WebSocket Server] --> F[🎵 Audio Processing]
         F --> G[📝 Deepgram STT]
-        F --> H[🤖 Gemini]
+        F --> H[🤖 AWS Bedrock Claude]
         F --> I[🔊 Gemini TTS]
     end
 
@@ -50,7 +50,7 @@ graph TB
 
 ### Pré-requisitos Completos
 - Tudo das Etapas 01 e 02
-- Acesso ao Gemini TTS pelo Google AI Studio
+- Conta no Google AI Studio para Gemini TTS
 
 ### Configuração Completa
 
@@ -60,11 +60,14 @@ Complete o `.env` do backend:
 # Deepgram (STT)
 DEEPGRAM_API_KEY=sua_chave_deepgram
 
-# Google Gemini (IA)
-GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-3.1-flash-lite
+# AWS Bedrock (IA)
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=sua_aws_access_key
+AWS_SECRET_ACCESS_KEY=sua_aws_secret_key
+BEDROCK_MODEL_ID=us.anthropic.claude-3-5-haiku-20241022-v1:0
 
-# Gemini TTS (TTS via Google AI Studio)
+# Gemini TTS (TTS)
+GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
 GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
 GEMINI_TTS_VOICE=Kore
 ```
@@ -72,8 +75,9 @@ GEMINI_TTS_VOICE=Kore
 ### Setup Gemini TTS
 
 1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Use a mesma chave configurada em `GEMINI_API_KEY`
-3. Configure `GEMINI_TTS_VOICE=Kore` ou outra voz suportada
+2. Crie ou reutilize sua chave da Gemini API
+3. Configure `GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview`
+4. Configure `GEMINI_TTS_VOICE=Kore` ou outra voz suportada pela Gemini API
 
 ## 🎓 O que Você Aprende (Final)
 
@@ -87,7 +91,7 @@ GEMINI_TTS_VOICE=Kore
 
 1. **🎤 Usuário fala** → Captura de áudio
 2. **📝 Transcrição** → Deepgram STT
-3. **🤖 IA processa** → Gemini gera resposta
+3. **🤖 IA processa** → Claude gera resposta
 4. **🔊 Síntese de voz** → Gemini TTS
 5. **🎵 Reprodução** → Resposta em áudio
 6. **🔄 Ciclo continua** → Conversa natural
@@ -97,7 +101,7 @@ GEMINI_TTS_VOICE=Kore
 Uma aplicação completa de **conversação por voz** que:
 
 - **Entende** o que você fala (STT)
-- **Pensa** com inteligência artificial (Gemini)
+- **Pensa** com inteligência artificial (Claude)
 - **Responde** com voz natural (TTS)
 - **Mantém** contexto conversacional
 - **Funciona** em tempo real
