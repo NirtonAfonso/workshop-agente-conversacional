@@ -23,7 +23,7 @@ npm run build
 
 Configure secrets no provedor de deploy:
 
-```env
+```text
 DEEPGRAM_API_KEY=...
 GEMINI_API_KEY=...
 GEMINI_MODEL=gemini-2.5-flash

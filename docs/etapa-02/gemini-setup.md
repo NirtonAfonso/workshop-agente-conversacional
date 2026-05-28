@@ -12,7 +12,7 @@
 
 No arquivo `etapa-02/backend/.env`:
 
-```env
+```text
 GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
 GEMINI_MODEL=gemini-2.5-flash
 ```

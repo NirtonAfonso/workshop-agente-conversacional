@@ -96,7 +96,7 @@ Guia completo para resolver problemas comuns durante o workshop.
    ```
 
 2. **Formato correto no .env**
-   ```env
+   ```text
    DEEPGRAM_API_KEY=sua_chave_sem_aspas
    ```
 
@@ -107,12 +107,12 @@ Guia completo para resolver problemas comuns durante o workshop.
 **Soluções**:
 
 1. **Verificar chave**
-   ```env
+   ```text
    GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
    ```
 
 2. **Verificar modelo**
-   ```env
+   ```text
    GEMINI_MODEL=gemini-2.5-flash
    ```
 
@@ -156,7 +156,7 @@ Guia completo para resolver problemas comuns durante o workshop.
    ```
 
 2. **Usar porta diferente**
-   ```env
+   ```text
    PORT=3002
    ```
 

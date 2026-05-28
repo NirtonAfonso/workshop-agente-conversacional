@@ -9,7 +9,7 @@
 
 ## Configurar `.env`
 
-```env
+```text
 ELEVENLABS_API_KEY=sua_chave_elevenlabs_aqui
 ELEVENLABS_VOICE_ID=5p9IbzcK4R8rN1fpGdMF
 ELEVENLABS_MODEL=eleven_multilingual_v2

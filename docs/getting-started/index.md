@@ -213,7 +213,7 @@ cp .env.example .env
 ```
 
 **Arquivo .env (etapa-01/backend/.env)**:
-```env
+```text
 # Deepgram Configuration
 DEEPGRAM_API_KEY=sua_chave_deepgram_aqui
 
@@ -307,7 +307,7 @@ navigator.mediaDevices.getUserMedia({ audio: true })
 **Sintoma**: Frontend não conecta com backend
 
 **Solução**:
-```env
+```text
 # Verificar CORS_ORIGIN no .env
 CORS_ORIGIN=http://localhost:5173
 ```

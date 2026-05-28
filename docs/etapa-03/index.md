@@ -56,7 +56,7 @@ graph TB
 
 Complete o `.env` do backend:
 
-```env
+```text
 # Deepgram (STT)
 DEEPGRAM_API_KEY=sua_chave_deepgram
 

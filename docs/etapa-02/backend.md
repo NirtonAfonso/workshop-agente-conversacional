@@ -11,7 +11,7 @@ O backend da etapa 02 adiciona IA conversacional usando a Gemini API via Google 
 
 ## Configuração
 
-```env
+```text
 DEEPGRAM_API_KEY=sua_chave_deepgram_aqui
 GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
 GEMINI_MODEL=gemini-2.5-flash

@@ -21,7 +21,7 @@ Guia detalhado para configurar todas as APIs necessárias para o workshop.
 
 ### Configuração
 
-```env
+```text
 DEEPGRAM_API_KEY=sua_chave_aqui
 ```
 
@@ -57,7 +57,7 @@ curl -X GET "https://api.deepgram.com/v1/projects" \
 
 ### Configuração
 
-```env
+```text
 GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
 GEMINI_MODEL=gemini-2.5-flash
 ```
@@ -95,7 +95,7 @@ curl "https://generativelanguage.googleapis.com/v1beta/models?key=SUA_GEMINI_API
 
 ### Configuração
 
-```env
+```text
 ELEVENLABS_API_KEY=sua_chave_aqui
 ELEVENLABS_VOICE_ID=EXAVITQu4vr4xnSDxMaL
 ELEVENLABS_MODEL=eleven_multilingual_v2
@@ -113,7 +113,7 @@ curl -X GET "https://api.elevenlabs.io/v1/voices" \
 
 ### Arquivo .env Final
 
-```env
+```text
 # Deepgram (Speech-to-Text)
 DEEPGRAM_API_KEY=sua_chave_deepgram_aqui
 

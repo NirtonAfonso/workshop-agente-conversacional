@@ -98,7 +98,7 @@ console.log('MediaDevices:', !!navigator.mediaDevices);
 ### Variáveis de Ambiente
 Prepare um arquivo `.env` com estas variáveis:
 
-```env
+```text
 # Deepgram
 DEEPGRAM_API_KEY=
 

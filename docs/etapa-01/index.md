@@ -59,7 +59,7 @@ npm install
 
 Crie `.env` no backend:
 
-```env
+```text
 DEEPGRAM_API_KEY=sua_chave_deepgram_aqui
 PORT=3001
 CORS_ORIGIN=http://localhost:5173

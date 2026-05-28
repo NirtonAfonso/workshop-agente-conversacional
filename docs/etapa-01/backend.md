@@ -12,7 +12,7 @@ Backend Node.js + TypeScript responsável por receber o áudio do frontend e int
 
 ## Configuração
 
-```env
+```text
 DEEPGRAM_API_KEY=sua_chave_deepgram_aqui
 PORT=3001
 CORS_ORIGIN=http://localhost:8080

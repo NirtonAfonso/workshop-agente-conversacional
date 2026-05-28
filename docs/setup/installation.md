@@ -64,7 +64,7 @@ npm install
 
 ### 1. Etapa 01 (.env no backend)
 
-```env
+```text
 # Deepgram Configuration
 DEEPGRAM_API_KEY=sua_chave_deepgram_aqui
 
@@ -76,7 +76,7 @@ NODE_ENV=development
 
 ### 2. Etapa 02 (adicionar ao .env)
 
-```env
+```text
 # Google Gemini Configuration
 GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
 GEMINI_MODEL=gemini-2.5-flash
@@ -84,7 +84,7 @@ GEMINI_MODEL=gemini-2.5-flash
 
 ### 3. Etapa 03 (adicionar ao .env)
 
-```env
+```text
 # ElevenLabs Configuration
 ELEVENLABS_API_KEY=sua_chave_elevenlabs_aqui
 ELEVENLABS_VOICE_ID=EXAVITQu4vr4xnSDxMaL
