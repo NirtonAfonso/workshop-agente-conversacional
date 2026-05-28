@@ -2,14 +2,14 @@
 
 ## Texto aparece, mas áudio não toca
 
-- Verifique `ELEVENLABS_API_KEY`.
-- Confira se o `ELEVENLABS_VOICE_ID` existe na sua conta.
+- Verifique `GEMINI_API_KEY`.
+- Confira se `GEMINI_TTS_MODEL` e `GEMINI_TTS_VOICE` estão configurados corretamente.
 - Veja se o navegador bloqueou autoplay.
 
 ## IA não responde
 
 - Verifique `GEMINI_API_KEY`.
-- Confirme `GEMINI_MODEL=gemini-2.5-flash`.
+- Confirme `GEMINI_MODEL=gemini-3.1-flash-lite`.
 - Reinicie o backend.
 
 ## Transcrição não chega
@@ -18,4 +18,3 @@
 - Confirme permissão de microfone no navegador.
 
 Veja também: [Solução de Problemas](../guides/troubleshooting.md).
-

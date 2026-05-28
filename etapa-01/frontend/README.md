@@ -171,7 +171,7 @@ audioContextRef.current = new AudioContext({ sampleRate: 16000 })
 Após dominar esta etapa, você pode avançar para:
 
 **Etapa 02**: Adicionar IA conversacional com Gemini
-**Etapa 03**: Incluir Text-to-Speech com ElevenLabs
+**Etapa 03**: Incluir Text-to-Speech com Gemini TTS
 
 ## 🔍 Debug
 

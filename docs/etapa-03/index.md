@@ -6,12 +6,12 @@
 
 ## 🎯 Objetivo
 
-**Versão final e completa** do workshop com conversa 100% por voz usando ElevenLabs TTS.
+**Versão final e completa** do workshop com conversa 100% por voz usando Gemini TTS.
 
 ## ✨ Funcionalidades Completas
 
 - **🎤 Tudo das Etapas 01 e 02**
-- **🔊 Text-to-Speech** com ElevenLabs
+- **🔊 Text-to-Speech** com Gemini TTS
 - **💬 Conversa completa por voz** (STT → IA → TTS)
 - **🎵 Reprodução automática** das respostas
 - **✨ Interface polida** e profissional
@@ -30,7 +30,7 @@ graph TB
         E[📡 WebSocket Server] --> F[🎵 Audio Processing]
         F --> G[📝 Deepgram STT]
         F --> H[🤖 Gemini]
-        F --> I[🔊 ElevenLabs TTS]
+        F --> I[🔊 Gemini TTS]
     end
 
     B <--> E
@@ -50,7 +50,7 @@ graph TB
 
 ### Pré-requisitos Completos
 - Tudo das Etapas 01 e 02
-- Conta ElevenLabs
+- Acesso ao Gemini TTS pelo Google AI Studio
 
 ### Configuração Completa
 
@@ -62,23 +62,22 @@ DEEPGRAM_API_KEY=sua_chave_deepgram
 
 # Google Gemini (IA)
 GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.1-flash-lite
 
-# ElevenLabs (TTS)
-ELEVENLABS_API_KEY=sua_chave_elevenlabs
-ELEVENLABS_VOICE_ID=EXAVITQu4vr4xnSDxMaL
-ELEVENLABS_MODEL=eleven_multilingual_v2
+# Gemini TTS (TTS via Google AI Studio)
+GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
+GEMINI_TTS_VOICE=Kore
 ```
 
-### Setup ElevenLabs
+### Setup Gemini TTS
 
-1. Acesse [ElevenLabs](https://elevenlabs.io)
-2. Crie conta e navegue até Profile → API Key
-3. Use voice ID padrão ou escolha uma voz
+1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Use a mesma chave configurada em `GEMINI_API_KEY`
+3. Configure `GEMINI_TTS_VOICE=Kore` ou outra voz suportada
 
 ## 🎓 O que Você Aprende (Final)
 
-1. **Text-to-Speech Integration** - ElevenLabs API
+1. **Text-to-Speech Integration** - Gemini TTS API
 2. **Complete Voice Pipeline** - STT → AI → TTS
 3. **Audio Processing** - Base64 encoding/decoding
 4. **Real-time Audio Playback** - Web Audio API output
@@ -89,7 +88,7 @@ ELEVENLABS_MODEL=eleven_multilingual_v2
 1. **🎤 Usuário fala** → Captura de áudio
 2. **📝 Transcrição** → Deepgram STT
 3. **🤖 IA processa** → Gemini gera resposta
-4. **🔊 Síntese de voz** → ElevenLabs TTS
+4. **🔊 Síntese de voz** → Gemini TTS
 5. **🎵 Reprodução** → Resposta em áudio
 6. **🔄 Ciclo continua** → Conversa natural
 
@@ -110,7 +109,7 @@ Uma aplicação completa de **conversação por voz** que:
 
 frontend
 backend
-elevenlabs-setup
+gemini-tts-setup
 deployment
 troubleshooting
 ```

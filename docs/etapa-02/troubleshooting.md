@@ -3,7 +3,7 @@
 ## Gemini não responde
 
 - Confira se `GEMINI_API_KEY` está preenchida.
-- Confira se `GEMINI_MODEL=gemini-2.5-flash`.
+- Confira se `GEMINI_MODEL=gemini-3.1-flash-lite`.
 - Reinicie o backend depois de alterar `.env`.
 - Valide a chave em [Google AI Studio](https://aistudio.google.com/app/apikey).
 

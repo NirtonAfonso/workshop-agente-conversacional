@@ -113,7 +113,7 @@ Guia completo para resolver problemas comuns durante o workshop.
 
 2. **Verificar modelo**
    ```text
-   GEMINI_MODEL=gemini-2.5-flash
+   GEMINI_MODEL=gemini-3.1-flash-lite
    ```
 
 3. **Gerar uma nova chave**
@@ -121,21 +121,23 @@ Guia completo para resolver problemas comuns durante o workshop.
    - Clique em **Create API key**
    - Atualize o `.env` e reinicie o backend
 
-### ElevenLabs Rate Limit
+### Gemini TTS não gera áudio
 
-**Erro comum**: `429 Too Many Requests`
+**Erro comum**: erro de autenticação, modelo indisponível ou cota excedida na Gemini API
 
 **Soluções**:
 
-1. **Verificar plano**
-   - Plano gratuito: 10k caracteres/mês
-   - Upgrade se necessário
-
-2. **Implementar retry**
-   ```typescript
-   // Já implementado no backend
-   await new Promise(resolve => setTimeout(resolve, 1000))
+1. **Verificar configuração**
+   ```text
+   GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
+   GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
+   GEMINI_TTS_VOICE=Kore
    ```
+
+2. **Verificar acesso e cota**
+   - Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
+   - Confirme se a chave está ativa
+   - Verifique limites e billing da sua conta
 
 ## 🖥️ Problemas do Backend
 

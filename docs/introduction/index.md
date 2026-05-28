@@ -28,7 +28,7 @@ graph TB
 
 - **🎤 Reconhecimento de Voz**: Transcrição em tempo real com Deepgram
 - **🧠 IA Conversacional**: Respostas inteligentes com Gemini
-- **🔊 Síntese de Voz**: Audio natural com ElevenLabs
+- **🔊 Síntese de Voz**: Audio natural com Gemini TTS
 - **💬 Interface Moderna**: React + TypeScript + Tailwind CSS
 - **⚡ Tempo Real**: Comunicação WebSocket bidirecional
 
@@ -63,7 +63,7 @@ graph TB
 Ao completar este workshop, você será capaz de:
 
 ### 🔧 Técnico
-1. **Integrar múltiplas APIs de IA** (Deepgram, Google Gemini, ElevenLabs)
+1. **Integrar múltiplas APIs de IA** (Deepgram, Google Gemini, Gemini TTS)
 2. **Processar áudio em tempo real** com Web Audio API
 3. **Implementar comunicação WebSocket** para streaming
 4. **Construir interfaces conversacionais** modernas
@@ -111,7 +111,7 @@ graph LR
 | **Getting Started** | 15 min | Setup e configuração de contas |
 | **Etapa 01** | 15 min | Transcrição básica com Deepgram |
 | **Etapa 02** | 15 min | IA conversacional com Gemini |
-| **Etapa 03** | 15 min | TTS completo com ElevenLabs |
+| **Etapa 03** | 15 min | TTS completo com Gemini TTS |
 | **Challenge** | 5 min | Extensões e melhorias |
 | **Wrap-up** | 10 min | Revisão e próximos passos |
 
@@ -131,7 +131,7 @@ graph TB
         E[📡 WebSocket Server] --> F[🎵 Audio Processing]
         F --> G[📝 Deepgram STT]
         F --> H[🤖 Gemini]
-        F --> I[🔊 ElevenLabs TTS]
+        F --> I[🔊 Gemini TTS]
     end
 
     B <--> E

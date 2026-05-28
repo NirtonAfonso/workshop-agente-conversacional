@@ -59,7 +59,7 @@ console.log('MediaDevices:', !!navigator.mediaDevices);
 ### 2. Google Gemini (IA Conversacional)
 - **Conta**: [Google AI Studio](https://aistudio.google.com/app/apikey)
 - **Chave**: Gemini API key
-- **Modelo**: Gemini 2.5 Flash
+- **Modelo**: Gemini 3.1 Flash Lite
 
 #### Como Configurar
 1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
@@ -67,15 +67,15 @@ console.log('MediaDevices:', !!navigator.mediaDevices);
 3. Crie ou selecione um projeto Google
 4. Copie a chave gerada para `GEMINI_API_KEY`
 
-### 3. ElevenLabs (Text-to-Speech)
-- **Conta**: [Criar conta](https://elevenlabs.io)
-- **Créditos**: Plano gratuito disponível
-- **Vozes**: Português brasileiro disponível
+### 3. Gemini TTS (Text-to-Speech)
+- **Conta**: [Google AI Studio](https://aistudio.google.com/app/apikey)
+- **Chave**: usa a mesma `GEMINI_API_KEY`
+- **Modelo**: `gemini-3.1-flash-tts-preview`
 
-#### Como Obter API Key
-1. Faça login no ElevenLabs
-2. Vá para **Profile → API Key**
-3. Copie a chave da API
+#### Como Configurar
+1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Crie ou reutilize a chave configurada em `GEMINI_API_KEY`
+3. Configure `GEMINI_TTS_MODEL` e `GEMINI_TTS_VOICE`
 
 ## 💰 Custos Estimados
 
@@ -87,9 +87,9 @@ console.log('MediaDevices:', !!navigator.mediaDevices);
 - **Pay-per-use**: ~$0.003 por 1K tokens
 - **Uso estimado**: ~$2-5 para workshop completo
 
-### ElevenLabs
-- **Gratuito**: 10.000 caracteres/mês
-- **Uso estimado**: Suficiente para workshop
+### Gemini TTS
+- **Uso estimado**: baixo para o workshop
+- **Cobrança**: depende dos limites e preços atuais da Gemini API
 
 > **💡 Dica**: Todos os serviços oferecem créditos gratuitos suficientes para completar o workshop!
 
@@ -104,12 +104,11 @@ DEEPGRAM_API_KEY=
 
 # Google Gemini
 GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.1-flash-lite
 
-# ElevenLabs
-ELEVENLABS_API_KEY=
-ELEVENLABS_VOICE_ID=EXAVITQu4vr4xnSDxMaL
-ELEVENLABS_MODEL=eleven_multilingual_v2
+# Gemini TTS
+GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
+GEMINI_TTS_VOICE=Kore
 
 # Server
 PORT=3001
@@ -126,7 +125,7 @@ Antes de começar, verifique:
 - [ ] Navegador moderno com Web Audio API
 - [ ] Conta Deepgram com API key
 - [ ] Conta no Google AI Studio com acesso Gemini
-- [ ] Conta ElevenLabs com API key
+- [ ] Gemini TTS configurado no Google AI Studio
 - [ ] Arquivo `.env` preparado
 - [ ] Microfone funcionando
 

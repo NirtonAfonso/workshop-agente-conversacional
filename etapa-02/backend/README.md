@@ -24,7 +24,7 @@ Evolução da **Etapa 01** adicionando:
 - Sistema de segurança
 
 **Novo na Etapa 02:**
-- **@google/genai SDK** - Acesso ao Gemini 2.5 Flash
+- **@google/genai SDK** - Acesso ao Gemini 3.1 Flash Lite
 - **Conversation management** - Contexto entre mensagens
 - **AI response pipeline** - Fluxo STT → AI
 
@@ -72,7 +72,7 @@ DEEPGRAM_API_KEY=your_deepgram_api_key_here
 
 # 🆕 Google Gemini Configuration
 GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.1-flash-lite
 
 # Server Configuration
 PORT=3001
@@ -85,7 +85,7 @@ NODE_ENV=development
 2. Clique em **Create API key**
 3. Crie ou selecione um projeto Google
 4. Copie a chave para `GEMINI_API_KEY`
-5. Configure `GEMINI_MODEL=gemini-2.5-flash` no `.env`
+5. Configure `GEMINI_MODEL=gemini-3.1-flash-lite` no `.env`
 
 ## 🧠 Serviços (Novos/Atualizados)
 
@@ -112,7 +112,7 @@ class GeminiService {
 ```
 
 **Características:**
-- **Gemini 2.5 Flash** - Modelo de última geração
+- **Gemini 3.1 Flash Lite** - Modelo de última geração
 - **Contexto conversacional** - Memória entre mensagens
 - **System prompts** - Personalidade e comportamento
 - **Session management** - Conversas isoladas por usuário
@@ -369,7 +369,7 @@ Solução: Implementar retry com backoff
 
 Esta etapa prepara para:
 
-**Etapa 03**: Adicionar ElevenLabs Text-to-Speech para conversa 100% por voz
+**Etapa 03**: Adicionar Gemini TTS para conversa 100% por voz
 
 ### Diferenças para Etapa 03
 - Etapa 02: **STT → AI → Texto**

@@ -53,7 +53,7 @@ Adicione ao `.env` do backend:
 ```text
 # Google Gemini Configuration
 GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.1-flash-lite
 ```
 
 ### Setup Google Gemini
@@ -62,7 +62,7 @@ GEMINI_MODEL=gemini-2.5-flash
 2. Clique em **Create API key**
 3. Crie ou selecione um projeto Google
 4. Copie a chave para `GEMINI_API_KEY`
-5. Use `GEMINI_MODEL=gemini-2.5-flash`
+5. Use `GEMINI_MODEL=gemini-3.1-flash-lite`
 
 ## 🎓 O que Você Aprende (Novo)
 

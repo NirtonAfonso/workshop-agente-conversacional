@@ -108,7 +108,7 @@ curl -X GET "https://api.deepgram.com/v1/projects" \
 ### 2. 🤖 Google Gemini (IA Conversacional)
 
 #### Por que Gemini?
-- 🧠 **Gemini 2.5 Flash**: Modelo mais avançado
+- 🧠 **Gemini 3.1 Flash Lite**: Modelo mais avançado
 - 💬 **Conversação natural** em português
 - 🔒 **Segurança enterprise**
 - 📊 **Pay-per-use** (~ $0.003/1K tokens)
@@ -132,12 +132,12 @@ curl -X GET "https://api.deepgram.com/v1/projects" \
 2. Clique em **Create API key**
 3. Crie ou selecione um projeto Google
 4. Copie a chave gerada
-5. Use o modelo `gemini-2.5-flash` no `.env`
+5. Use o modelo `gemini-3.1-flash-lite` no `.env`
 
 **Passo 3: Configurar variáveis de ambiente**
 1. Abra o arquivo `.env` do backend
 2. Adicione `GEMINI_API_KEY=sua_chave_google_ai_studio_aqui`
-3. Adicione `GEMINI_MODEL=gemini-2.5-flash`
+3. Adicione `GEMINI_MODEL=gemini-3.1-flash-lite`
 4. Salve o arquivo e reinicie o backend
 
 #### Teste Rápido
@@ -148,40 +148,29 @@ curl "https://generativelanguage.googleapis.com/v1beta/models?key=SUA_GEMINI_API
 
 ---
 
-### 3. 🔊 ElevenLabs (Text-to-Speech)
+### 3. 🔊 Gemini TTS (Text-to-Speech)
 
-#### Por que ElevenLabs?
-- 🎵 **Qualidade excepcional** de voz
+#### Por que Gemini TTS?
+- 🎵 **Síntese de voz** pela mesma Gemini API
 - 🇧🇷 **Português natural**
-- ⚡ **Latência baixa**
-- 🆓 **10.000 caracteres/mês** gratuitos
+- ⚡ **Integração simples** com a chave do Google AI Studio
+- 🔧 **Menos serviços externos** para configurar
 
 #### Setup da Conta
 
-**Passo 1: Registro**
-1. Acesse [elevenlabs.io](https://elevenlabs.io)
-2. "Get Started Free"
-3. Registre com email
-4. Confirme conta
+**Passo 1: Chave da Gemini API**
+1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Crie ou reutilize a chave configurada em `GEMINI_API_KEY`
 
-**Passo 2: API Key**
-1. Login → Avatar (canto superior direito)
-2. **"Profile"**
-3. Copie a **"API Key"**
-
-**Passo 3: Escolher Voz**
-1. Menu **"Voices"**
-2. Teste vozes disponíveis
-3. Para português: buscar "Portuguese" ou "Multilingual"
-4. **Recomendação**: Use `EXAVITQu4vr4xnSDxMaL` (Bella - Multilingual)
+**Passo 2: Modelo de voz**
+1. Configure `GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview`
+2. Configure `GEMINI_TTS_VOICE=Kore`
+3. Troque a voz se quiser usar outra voz suportada pela Gemini API
 
 #### Teste Rápido
 ```bash
-# Teste via curl (substitua SUA_CHAVE)
-curl -X GET "https://api.elevenlabs.io/v1/voices" \
-  -H "xi-api-key: SUA_CHAVE_AQUI"
-
-# Resposta esperada: JSON com lista de vozes
+# Listar modelos disponíveis na Gemini API
+curl "https://generativelanguage.googleapis.com/v1beta/models?key=SUA_GEMINI_API_KEY"
 ```
 
 ---
@@ -262,7 +251,7 @@ npm run dev
 ### 🔑 APIs Configuradas
 - [ ] **Deepgram**: Conta criada + API key obtida + teste passou
 - [ ] **Google Gemini**: Conta Google AI Studio + chave da Gemini API configurada
-- [ ] **ElevenLabs**: Conta criada + API key obtida + teste passou
+- [ ] **Gemini TTS**: `GEMINI_TTS_MODEL` e `GEMINI_TTS_VOICE` configurados
 
 ### 🎯 Projeto Funcionando
 - [ ] Repositório clonado
@@ -348,14 +337,13 @@ Durante o workshop completo, você gastará aproximadamente:
 |---------|--------------|-------|
 | **Deepgram** | ~30 min de áudio | $1.05 |
 | **Google Gemini** | ~500 requests | $2.50 |
-| **ElevenLabs** | ~5000 caracteres | $0.15 |
-| **Total** | | **~$3.70** |
+| **Gemini TTS** | ~5000 caracteres de resposta | Conforme limites/preços atuais da Gemini API |
+| **Total** | | Depende do uso e dos limites atuais das APIs |
 
 ```{admonition} Créditos Gratuitos 💰
 :class: note
 
 - **Deepgram**: $150 gratuitos
-- **ElevenLabs**: 10k caracteres/mês
 - **Google AI Studio**: cota gratuita disponível conforme limites atuais da Gemini API
 
 O workshop pode ser feito **completamente gratuito**!

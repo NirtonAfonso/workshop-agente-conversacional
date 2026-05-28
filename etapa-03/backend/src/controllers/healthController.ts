@@ -35,11 +35,17 @@ export const healthCheck = async (req: Request, res: Response) => {
         deepgramModel: serverConfig.deepgramModel,
         deepgramLanguage: serverConfig.deepgramLanguage,
         audioSampleRate: serverConfig.audioSampleRate,
+        geminiModel: serverConfig.geminiModel,
+        geminiTtsModel: serverConfig.geminiTtsModel,
+        geminiTtsVoice: serverConfig.geminiTtsVoice,
       },
     };
 
-    // Test Deepgram connection
+    // Test API connections
     let deepgramStatus = 'unknown';
+    let geminiStatus = 'unknown';
+    let geminiTtsStatus = 'unknown';
+
     try {
       if (socketService) {
         const isConnected = await socketService.testDeepgramConnection();
@@ -50,12 +56,34 @@ export const healthCheck = async (req: Request, res: Response) => {
       logger.error('Deepgram health check failed', { error });
     }
 
+    try {
+      if (socketService) {
+        const isConnected = await socketService.testGeminiConnection();
+        geminiStatus = isConnected ? 'connected' : 'disconnected';
+      }
+    } catch (error) {
+      geminiStatus = 'error';
+      logger.error('Gemini health check failed', { error });
+    }
+
+    try {
+      if (socketService) {
+        const isConnected = await socketService.testGeminiTtsConnection();
+        geminiTtsStatus = isConnected ? 'connected' : 'disconnected';
+      }
+    } catch (error) {
+      geminiTtsStatus = 'error';
+      logger.error('Gemini TTS health check failed', { error });
+    }
+
     const responseTime = Date.now() - startTime;
 
     const response = {
       ...health,
       services: {
         deepgram: deepgramStatus,
+        gemini: geminiStatus,
+        geminiTts: geminiTtsStatus,
         websocket: socketService ? 'running' : 'not_initialized',
       },
       responseTime: `${responseTime}ms`,
@@ -78,17 +106,21 @@ export const readinessCheck = async (req: Request, res: Response) => {
     // Check if all required services are ready
     const checks = {
       deepgram: false,
+      gemini: false,
+      geminiTts: false,
       websocket: false,
     };
 
-    // Check Deepgram connection
+    // Check API connections
     try {
       if (socketService) {
         checks.deepgram = await socketService.testDeepgramConnection();
+        checks.gemini = await socketService.testGeminiConnection();
+        checks.geminiTts = await socketService.testGeminiTtsConnection();
         checks.websocket = true;
       }
     } catch (error) {
-      logger.error('Readiness check failed for Deepgram', { error });
+      logger.error('Readiness check failed for external APIs', { error });
     }
 
     const isReady = Object.values(checks).every(check => check === true);

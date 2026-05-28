@@ -3,7 +3,7 @@ import { Server as HTTPServer } from 'http';
 import { ClientSession, SocketEvents, TranscriptionResult, AIResponse } from '@/types/index.js';
 import { DeepgramService } from './DeepgramService.js';
 import { GeminiService } from './GeminiService.js';
-import { ElevenLabsService } from './ElevenLabsService.js';
+import { GeminiTTSService } from './GeminiTTSService.js';
 import { serverConfig } from '@/utils/config.js';
 import { logger } from '@/utils/logger.js';
 
@@ -11,7 +11,7 @@ export class SocketService {
   private io: SocketIOServer;
   private deepgramService: DeepgramService;
   private geminiService: GeminiService;
-  private elevenLabsService: ElevenLabsService;
+  private geminiTtsService: GeminiTTSService;
   private sessions = new Map<string, ClientSession>();
 
   constructor(httpServer: HTTPServer) {
@@ -27,7 +27,7 @@ export class SocketService {
 
     this.deepgramService = new DeepgramService();
     this.geminiService = new GeminiService();
-    this.elevenLabsService = new ElevenLabsService();
+    this.geminiTtsService = new GeminiTTSService();
     this.setupEventHandlers();
   }
 
@@ -95,7 +95,7 @@ export class SocketService {
               // Generate TTS audio for the AI response
               try {
                 logger.info(`🔊 Generating TTS for AI response: "${aiResponse.text.substring(0, 100)}..."`);
-                const ttsResponse = await this.elevenLabsService.generateSpeech(aiResponse.text, session.id);
+                const ttsResponse = await this.geminiTtsService.generateSpeech(aiResponse.text, session.id);
                 session.socket.emit('tts-audio', ttsResponse);
               } catch (ttsError) {
                 logger.error('TTS generation failed', { sessionId: session.id, error: ttsError });
@@ -211,7 +211,7 @@ export class SocketService {
     return await this.geminiService.testConnection();
   }
 
-  public async testElevenLabsConnection(): Promise<boolean> {
-    return await this.elevenLabsService.testConnection();
+  public async testGeminiTtsConnection(): Promise<boolean> {
+    return await this.geminiTtsService.testConnection();
   }
 }

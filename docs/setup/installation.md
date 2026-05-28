@@ -79,16 +79,15 @@ NODE_ENV=development
 ```text
 # Google Gemini Configuration
 GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.1-flash-lite
 ```
 
 ### 3. Etapa 03 (adicionar ao .env)
 
 ```text
-# ElevenLabs Configuration
-ELEVENLABS_API_KEY=sua_chave_elevenlabs_aqui
-ELEVENLABS_VOICE_ID=EXAVITQu4vr4xnSDxMaL
-ELEVENLABS_MODEL=eleven_multilingual_v2
+# Gemini TTS Configuration
+GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
+GEMINI_TTS_VOICE=Kore
 ```
 
 ## ✅ Verificação da Instalação

@@ -39,9 +39,8 @@ export interface ServerConfig {
   utterances: boolean;
   geminiApiKey: string;
   geminiModel: string;
-  elevenlabsApiKey: string;
-  elevenlabsVoiceId: string;
-  elevenlabsModel: string;
+  geminiTtsModel: string;
+  geminiTtsVoice: string;
 }
 
 export interface SocketEvents {

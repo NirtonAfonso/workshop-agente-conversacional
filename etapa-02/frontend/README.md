@@ -266,7 +266,7 @@ console.log('📝 Conversation state:', messages.length, 'messages')
 
 Esta etapa prepara para:
 
-**Etapa 03**: Adicionar Text-to-Speech com ElevenLabs para conversa completa por voz
+**Etapa 03**: Adicionar Text-to-Speech com Gemini TTS para conversa completa por voz
 
 ### Diferenças para Etapa 03
 - Etapa 02: Conversa **texto + áudio** (STT + IA)

@@ -16,8 +16,8 @@ Servidor Node.js + TypeScript que orquestra a comunicação entre frontend e mú
 
 ### Integrações de IA
 - **Deepgram SDK** - Speech-to-Text em tempo real
-- **Google Gemini** - Gemini 2.5 Flash para IA conversacional
-- **ElevenLabs** - Text-to-Speech de alta qualidade
+- **Google Gemini** - Gemini 3.1 Flash Lite para IA conversacional
+- **Gemini TTS** - Text-to-Speech via Google AI Studio
 
 ### Segurança e DevEx
 - **Helmet** - Headers de segurança
@@ -37,7 +37,7 @@ backend/
 │   ├── services/                # Lógica de negócio
 │   │   ├── DeepgramService.ts   # Integração Deepgram STT
 │   │   ├── GeminiService.ts    # Integração Gemini
-│   │   ├── ElevenLabsService.ts # Integração ElevenLabs TTS
+│   │   ├── GeminiTTSService.ts # Integração Gemini TTS
 │   │   └── SocketService.ts     # Gerenciamento WebSocket
 │   ├── types/                   # Definições TypeScript
 │   │   └── index.ts             # Tipos compartilhados
@@ -82,12 +82,12 @@ DEEPGRAM_API_KEY=your_deepgram_api_key_here
 
 # Google Gemini Configuration
 GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.1-flash-lite
 
-# ElevenLabs Configuration
-ELEVENLABS_API_KEY=your_elevenlabs_api_key
-ELEVENLABS_VOICE_ID=EXAVITQu4vr4xnSDxMaL
-ELEVENLABS_MODEL=eleven_multilingual_v2
+# Gemini TTS Configuration
+# Uses the same GEMINI_API_KEY from Google AI Studio
+GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
+GEMINI_TTS_VOICE=Kore
 
 # Server Configuration
 PORT=3001
@@ -113,7 +113,7 @@ class DeepgramService {
 
 ### GeminiService
 Serviço para IA conversacional:
-- **Gemini 2.5 Flash** via Google Gemini
+- **Gemini 3.1 Flash Lite** via Google Gemini
 - **Contexto conversacional** mantido
 - **System prompts** customizáveis
 - **Rate limiting** interno
@@ -126,7 +126,7 @@ class GeminiService {
 }
 ```
 
-### ElevenLabsService
+### GeminiTTSService
 Serviço para síntese de voz:
 - **Voz natural** em português
 - **Streaming de áudio** otimizado
@@ -134,10 +134,9 @@ Serviço para síntese de voz:
 - **Base64 encoding** para transmissão
 
 ```typescript
-class ElevenLabsService {
+class GeminiTTSService {
   async generateSpeech(text: string, sessionId?: string): Promise<TTSResponse>
   async testConnection(): Promise<boolean>
-  async getAvailableVoices(): Promise<any[]>
 }
 ```
 
@@ -254,14 +253,14 @@ GET /api/status  # Status detalhado com configurações
 ```
 Frontend Audio → WebSocket → Deepgram → Transcription
                                 ↓
-Frontend ← TTS Audio ← ElevenLabs ← AI Response ← Gemini
+Frontend ← TTS Audio ← Gemini TTS ← AI Response ← Gemini
 ```
 
 ### Pipeline Detalhado
 1. **Audio Capture**: Frontend envia chunks de áudio
 2. **STT Processing**: Deepgram processa e retorna transcrição
 3. **AI Processing**: Gemini gera resposta inteligente
-4. **TTS Processing**: ElevenLabs converte resposta em áudio
+4. **TTS Processing**: Gemini TTS converte resposta em áudio
 5. **Audio Playback**: Frontend reproduz áudio da resposta
 
 ## 🚀 Deploy
@@ -320,7 +319,7 @@ logger.info('🤖 Gemini response generated', {
 ### Health Checks Automáticos
 - **Deepgram**: Teste de conectividade na inicialização
 - **Google Gemini**: Validação de credenciais
-- **ElevenLabs**: Verificação de API key
+- **Gemini TTS**: Validação do modelo de voz configurado
 
 ### Monitoramento
 - **Memory usage** tracking

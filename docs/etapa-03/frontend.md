@@ -1,6 +1,6 @@
 # Etapa 03 - Frontend
 
-Na etapa 03, o frontend exibe a conversa completa e reproduz o áudio gerado pelo ElevenLabs.
+Na etapa 03, o frontend exibe a conversa completa e reproduz o áudio gerado pelo Gemini TTS.
 
 ## O que muda em relação à etapa 02
 

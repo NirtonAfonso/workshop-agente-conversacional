@@ -10,7 +10,7 @@
 
 ### ✨ Funcionalidades Completas
 - 🎤 **Tudo das Etapas 01 e 02**
-- 🔊 **Text-to-Speech** com ElevenLabs
+- 🔊 **Text-to-Speech** com Gemini TTS
 - 💬 **Conversa completa por voz** (STT → IA → TTS)
 - 🎵 **Reprodução automática** das respostas
 - ✨ **Interface polida** e profissional
@@ -33,7 +33,7 @@ npm run dev
 Requer todas as APIs configuradas no `.env` do backend:
 - Deepgram (STT)
 - Google Gemini (IA)
-- ElevenLabs (TTS)
+- Gemini TTS (TTS)
 
 ### 📚 Documentação detalhada
 - [Frontend README](./frontend/README.md)

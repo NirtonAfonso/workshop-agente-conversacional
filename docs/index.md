@@ -1,6 +1,6 @@
 # 🎤 Workshop Agente Conversacional
 
-Um workshop completo demonstrando como criar um agente conversacional inteligente que captura áudio em tempo real, transcreve com Deepgram, gera respostas inteligentes com Gemini e converte texto em voz com ElevenLabs.
+Um workshop completo demonstrando como criar um agente conversacional inteligente que captura áudio em tempo real, transcreve com Deepgram, gera respostas inteligentes com Gemini e converte texto em voz com Gemini TTS.
 
 ![Status](https://img.shields.io/badge/status-pronto-brightgreen)
 ![React](https://img.shields.io/badge/React-18.3.1-blue)
@@ -14,7 +14,7 @@ Este workshop apresenta uma implementação completa de um agente conversacional
 - **🎤 Captura áudio** em tempo real do microfone do usuário
 - **📝 Transcreve automaticamente** usando a API do Deepgram (Speech-to-Text)
 - **🤖 Gera respostas inteligentes** usando Gemini via Google AI Studio
-- **🔊 Converte respostas em áudio** usando ElevenLabs (Text-to-Speech)
+- **🔊 Converte respostas em áudio** usando Gemini TTS (Text-to-Speech)
 - **💬 Mantém conversação natural** com contexto e memória
 - **⚡ Funciona em tempo real** com WebSocket para comunicação instantânea
 
@@ -56,7 +56,7 @@ setup/configuration
 
 - Captura e processamento de áudio no navegador com Web Audio API
 - Comunicação em tempo real com WebSocket (Socket.io)
-- Integração com APIs de IA modernas (Deepgram, Google Gemini, ElevenLabs)
+- Integração com APIs de IA modernas (Deepgram, Google Gemini, Gemini TTS)
 - Desenvolvimento fullstack com React + TypeScript e Node.js + TypeScript
 - Criação de interfaces modernas e responsivas com Radix UI e Tailwind CSS
 - Arquitetura de aplicações conversacionais

@@ -6,8 +6,7 @@ config();
 
 const requiredEnvVars = [
   'DEEPGRAM_API_KEY',
-  'GEMINI_API_KEY',
-  'ELEVENLABS_API_KEY'
+  'GEMINI_API_KEY'
 ];
 
 // Validate required environment variables
@@ -30,10 +29,9 @@ export const serverConfig: ServerConfig = {
   endpointing: parseInt(process.env.DEEPGRAM_ENDPOINTING || '300', 10),
   utterances: process.env.DEEPGRAM_UTTERANCES === 'true',
   geminiApiKey: process.env.GEMINI_API_KEY!,
-  geminiModel: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
-  elevenlabsApiKey: process.env.ELEVENLABS_API_KEY!,
-  elevenlabsVoiceId: process.env.ELEVENLABS_VOICE_ID || 'Rachel',
-  elevenlabsModel: process.env.ELEVENLABS_MODEL || 'eleven_multilingual_v2',
+  geminiModel: process.env.GEMINI_MODEL || 'gemini-3.1-flash-lite',
+  geminiTtsModel: process.env.GEMINI_TTS_MODEL || 'gemini-3.1-flash-tts-preview',
+  geminiTtsVoice: process.env.GEMINI_TTS_VOICE || 'Kore',
 };
 
 export const isDevelopment = process.env.NODE_ENV === 'development';

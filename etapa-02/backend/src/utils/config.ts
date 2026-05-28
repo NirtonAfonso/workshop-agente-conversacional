@@ -29,7 +29,7 @@ export const serverConfig: ServerConfig = {
   endpointing: parseInt(process.env.DEEPGRAM_ENDPOINTING || '300', 10),
   utterances: process.env.DEEPGRAM_UTTERANCES === 'true',
   geminiApiKey: process.env.GEMINI_API_KEY!,
-  geminiModel: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+  geminiModel: process.env.GEMINI_MODEL || 'gemini-3.1-flash-lite',
 };
 
 export const isDevelopment = process.env.NODE_ENV === 'development';

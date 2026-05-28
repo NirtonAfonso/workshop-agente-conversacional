@@ -322,7 +322,7 @@ Solução: Verificar `CORS_ORIGIN` no `.env`
 Esta etapa estabelece a base para:
 
 **Etapa 02**: Adicionar Gemini para IA conversacional
-**Etapa 03**: Incluir ElevenLabs para Text-to-Speech completo
+**Etapa 03**: Incluir Gemini TTS para Text-to-Speech completo
 
 ## 🎯 Conceitos-Chave
 

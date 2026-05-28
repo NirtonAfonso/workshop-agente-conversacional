@@ -1,6 +1,6 @@
 # 🎤 Workshop Agente Conversacional
 
-Um workshop completo demonstrando como criar um agente conversacional inteligente que captura áudio em tempo real, transcreve com Deepgram, gera respostas inteligentes com Gemini e converte texto em voz com ElevenLabs.
+Um workshop completo demonstrando como criar um agente conversacional inteligente que captura áudio em tempo real, transcreve com Deepgram, gera respostas inteligentes com Gemini e converte texto em voz com Gemini TTS.
 
 ![Status](https://img.shields.io/badge/status-pronto-brightgreen)
 ![React](https://img.shields.io/badge/React-18.3.1-blue)
@@ -8,7 +8,7 @@ Um workshop completo demonstrando como criar um agente conversacional inteligent
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green)
 ![Deepgram](https://img.shields.io/badge/Deepgram-API-purple)
 ![Google Gemini](https://img.shields.io/badge/Google%20Gemini-API-blue)
-![ElevenLabs](https://img.shields.io/badge/ElevenLabs-TTS-red)
+![Gemini TTS](https://img.shields.io/badge/Gemini TTS-TTS-red)
 
 ## 📋 Índice
 
@@ -28,7 +28,7 @@ Este workshop apresenta uma implementação completa de um agente conversacional
 - **🎤 Captura áudio** em tempo real do microfone do usuário
 - **📝 Transcreve automaticamente** usando a API do Deepgram (Speech-to-Text)
 - **🤖 Gera respostas inteligentes** usando Gemini via Google AI Studio
-- **🔊 Converte respostas em áudio** usando ElevenLabs (Text-to-Speech)
+- **🔊 Converte respostas em áudio** usando Gemini TTS (Text-to-Speech)
 - **💬 Mantém conversação natural** com contexto e memória
 - **⚡ Funciona em tempo real** com WebSocket para comunicação instantânea
 
@@ -36,7 +36,7 @@ Este workshop apresenta uma implementação completa de um agente conversacional
 
 - Captura e processamento de áudio no navegador com Web Audio API
 - Comunicação em tempo real com WebSocket (Socket.io)
-- Integração com APIs de IA modernas (Deepgram, Google Gemini, ElevenLabs)
+- Integração com APIs de IA modernas (Deepgram, Google Gemini, Gemini TTS)
 - Desenvolvimento fullstack com React + TypeScript e Node.js + TypeScript
 - Criação de interfaces modernas e responsivas com Radix UI e Tailwind CSS
 - Arquitetura de aplicações conversacionais
@@ -56,8 +56,8 @@ Este workshop apresenta uma implementação completa de um agente conversacional
 - **Express.js** - Framework web minimalista e flexível
 - **Socket.io** - WebSocket para comunicação bidirecional
 - **Deepgram SDK** - Speech-to-Text em tempo real
-- **Google Gemini** - Acesso ao Gemini 2.5 Flash para IA conversacional
-- **ElevenLabs** - Text-to-Speech de alta qualidade
+- **Google Gemini** - Acesso ao Gemini 3.1 Flash Lite para IA conversacional
+- **Gemini TTS** - Text-to-Speech via Google AI Studio
 
 ### Segurança & DevEx
 - **Helmet** - Headers de segurança
@@ -77,7 +77,6 @@ Antes de começar, você precisará de:
 ### Contas e Chaves de API
 - **Conta no Deepgram** ([criar conta gratuita](https://deepgram.com))
 - **Conta no Google AI Studio** com chave da Gemini API ([criar chave](https://aistudio.google.com/app/apikey))
-- **Conta no ElevenLabs** ([criar conta](https://elevenlabs.io))
 
 > **💡 Dica**: Todas as plataformas oferecem créditos gratuitos para teste!
 
@@ -112,12 +111,11 @@ DEEPGRAM_API_KEY=sua_chave_deepgram_aqui
 
 # Google Gemini (IA Conversacional)
 GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.1-flash-lite
 
-# ElevenLabs (Text-to-Speech)
-ELEVENLABS_API_KEY=sua_chave_elevenlabs_aqui
-ELEVENLABS_VOICE_ID=EXAVITQu4vr4xnSDxMaL
-ELEVENLABS_MODEL=eleven_multilingual_v2
+# Gemini TTS (Text-to-Speech via Google AI Studio)
+GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
+GEMINI_TTS_VOICE=Kore
 
 # Configurações do Servidor
 PORT=3001
@@ -137,10 +135,11 @@ NODE_ENV=development
 2. Crie uma chave de API para usar a Gemini API
 3. Copie a chave e use em GEMINI_API_KEY no arquivo .env
 
-#### ElevenLabs
-1. Acesse [ElevenLabs](https://elevenlabs.io)
-2. Crie uma conta e navegue até **Profile → API Key**
-3. Use o voice ID padrão ou escolha uma voz diferente
+#### Gemini TTS
+1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Use a mesma chave configurada em `GEMINI_API_KEY`
+3. Configure `GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview`
+4. Configure `GEMINI_TTS_VOICE=Kore` ou outra voz suportada pelo Gemini TTS
 
 ## 🚀 Como Usar
 
@@ -202,7 +201,7 @@ workshop-agente-conversacional/
 │       │   ├── services/
 │       │   │   ├── DeepgramService.ts    # STT
 │       │   │   ├── GeminiService.ts     # IA
-│       │   │   ├── ElevenLabsService.ts  # TTS
+│       │   │   ├── GeminiTTSService.ts  # TTS
 │       │   │   └── SocketService.ts      # WebSocket
 │       │   ├── types/       # TypeScript definitions
 │       │   ├── utils/       # Config & logging
@@ -228,7 +227,7 @@ workshop-agente-conversacional/
 ### 🧠 Inteligência Artificial
 - ✅ **Speech-to-Text**: Transcrição em tempo real com Deepgram (português brasileiro)
 - ✅ **IA Conversacional**: Respostas inteligentes com Gemini via Google AI Studio
-- ✅ **Text-to-Speech**: Síntese de voz natural com ElevenLabs
+- ✅ **Text-to-Speech**: Síntese de voz natural com Gemini TTS
 - ✅ Manutenção de contexto conversacional
 
 ### 💎 Interface e Experiência
@@ -261,7 +260,7 @@ Este workshop está organizado em 3 etapas progressivas:
 - Contexto conversacional
 
 ### 📁 Etapa 03 - Workshop Completo 🎖️
-- **Text-to-Speech com ElevenLabs**
+- **Text-to-Speech com Gemini TTS**
 - **Conversa completa por voz**
 - **Interface polida e profissional**
 - **Todas as funcionalidades integradas**
@@ -271,6 +270,12 @@ Este workshop está organizado em 3 etapas progressivas:
 ## 📄 Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## 🌐 Site da Documentação
+
+O site em `docs/` é publicado pelo workflow `.github/workflows/docs.yml`.
+No GitHub, vá em **Settings > Pages** e selecione **GitHub Actions** como fonte.
+Em seguida, faça push na branch `main` ou `master`; o workflow compila o Sphinx e publica o site no GitHub Pages.
 
 ---
 
