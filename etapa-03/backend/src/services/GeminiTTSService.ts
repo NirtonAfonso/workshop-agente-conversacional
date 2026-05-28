@@ -16,16 +16,7 @@ export class GeminiTTSService {
 
       const response = await this.client.models.generateContent({
         model: serverConfig.geminiTtsModel,
-        contents: [
-          {
-            role: 'user',
-            parts: [
-              {
-                text: `Leia em voz alta, de forma natural e clara, mantendo o idioma e o tom do texto:\n\n${text}`,
-              },
-            ],
-          },
-        ],
+        contents: [{ parts: [{ text: this.buildTtsPrompt(text) }] }],
         config: {
           responseModalities: ['AUDIO'],
           speechConfig: {
@@ -38,18 +29,15 @@ export class GeminiTTSService {
         },
       });
 
-      const inlineData = response.candidates?.[0]?.content?.parts?.find(part => part.inlineData)?.inlineData;
+      const inlineData = this.extractAudio(response);
 
-      if (!inlineData?.data) {
-        throw new Error('Empty audio response from Gemini TTS');
-      }
-
-      const pcmBuffer = Buffer.from(inlineData.data, 'base64');
+      const pcmBuffer = this.decodeAudioData(inlineData.data);
       const sampleRate = this.getSampleRate(inlineData.mimeType);
-      const wavBuffer = this.wrapPcmAsWav(pcmBuffer, sampleRate);
+      const isWav = inlineData.mimeType?.toLowerCase().includes('wav') || false;
+      const audioBuffer = isWav ? pcmBuffer : this.wrapPcmAsWav(pcmBuffer, sampleRate);
 
       const ttsResponse: TTSResponse = {
-        audioData: wavBuffer.toString('base64'),
+        audioData: audioBuffer.toString('base64'),
         text,
         timestamp: Date.now(),
         voiceId: serverConfig.geminiTtsVoice,
@@ -59,9 +47,10 @@ export class GeminiTTSService {
       logger.info('Speech generated successfully with Gemini TTS', {
         sessionId,
         textLength: text.length,
-        audioSize: wavBuffer.length,
+        audioSize: audioBuffer.length,
         voiceId: serverConfig.geminiTtsVoice,
         model: serverConfig.geminiTtsModel,
+        mimeType: inlineData.mimeType,
       });
 
       return ttsResponse;
@@ -81,7 +70,7 @@ export class GeminiTTSService {
 
       const response = await this.client.models.generateContent({
         model: serverConfig.geminiTtsModel,
-        contents: 'Diga apenas: ok',
+        contents: [{ parts: [{ text: 'Say cheerfully: ok' }] }],
         config: {
           responseModalities: ['AUDIO'],
           speechConfig: {
@@ -94,7 +83,7 @@ export class GeminiTTSService {
         },
       });
 
-      const hasAudio = !!response.candidates?.[0]?.content?.parts?.some(part => part.inlineData?.data);
+      const hasAudio = !!this.extractAudio(response).data;
 
       logger.info('Gemini TTS connection test', { successful: hasAudio });
       return hasAudio;
@@ -104,6 +93,36 @@ export class GeminiTTSService {
       });
       return false;
     }
+  }
+
+  private buildTtsPrompt(text: string): string {
+    return `Leia em voz alta, de forma natural e clara, mantendo o idioma e o tom do texto:\n\n${text}`;
+  }
+
+  private extractAudio(response: any): { data: string | Uint8Array; mimeType?: string } {
+    const part = response.candidates?.[0]?.content?.parts?.find((item: any) => item.inlineData?.data);
+    const inlineData = part?.inlineData;
+
+    if (!inlineData?.data) {
+      const finishReason = response.candidates?.[0]?.finishReason;
+      const promptFeedback = response.promptFeedback ? JSON.stringify(response.promptFeedback) : undefined;
+      const details = [
+        finishReason ? `finishReason=${finishReason}` : undefined,
+        promptFeedback ? `promptFeedback=${promptFeedback}` : undefined,
+      ].filter(Boolean).join('; ');
+
+      throw new Error(`Gemini TTS did not return audio${details ? ` (${details})` : ''}`);
+    }
+
+    return inlineData;
+  }
+
+  private decodeAudioData(data: string | Uint8Array): Buffer {
+    if (data instanceof Uint8Array) {
+      return Buffer.from(data);
+    }
+
+    return Buffer.from(data, 'base64');
   }
 
   private getSampleRate(mimeType?: string): number {
