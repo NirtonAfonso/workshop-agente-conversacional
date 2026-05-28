@@ -98,7 +98,8 @@ export class SocketService {
                 const ttsResponse = await this.geminiTtsService.generateSpeech(aiResponse.text, session.id);
                 session.socket.emit('tts-audio', ttsResponse);
               } catch (ttsError) {
-                logger.error('TTS generation failed', { sessionId: session.id, error: ttsError });
+                const message = ttsError instanceof Error ? ttsError.message : String(ttsError);
+                logger.error('TTS generation failed', { sessionId: session.id, error: message });
                 session.socket.emit('tts-error', `Failed to generate speech: ${ttsError}`);
               }
             } catch (error) {
