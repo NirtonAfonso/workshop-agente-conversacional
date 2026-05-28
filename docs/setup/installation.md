@@ -6,7 +6,7 @@ Guia completo para instalar e configurar o workshop.
 
 ```bash
 # Clone o repositório
-git clone https://github.com/viniganancio/workshop-agente-conversacional.git
+git clone https://github.com/NirtonAfonso/workshop-agente-conversacional.git
 cd workshop-agente-conversacional
 ```
 
@@ -77,11 +77,9 @@ NODE_ENV=development
 ### 2. Etapa 02 (adicionar ao .env)
 
 ```env
-# AWS Bedrock Configuration
-AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=sua_aws_access_key_id
-AWS_SECRET_ACCESS_KEY=sua_aws_secret_access_key
-BEDROCK_MODEL_ID=anthropic.claude-3-5-sonnet-20241022-v2:0
+# Google Gemini Configuration
+GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
+GEMINI_MODEL=gemini-2.5-flash
 ```
 
 ### 3. Etapa 03 (adicionar ao .env)

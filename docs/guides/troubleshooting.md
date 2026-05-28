@@ -100,37 +100,26 @@ Guia completo para resolver problemas comuns durante o workshop.
    DEEPGRAM_API_KEY=sua_chave_sem_aspas
    ```
 
-### AWS Bedrock Access Denied
+### Google Gemini Access Denied
 
-**Erro comum**: `AccessDeniedException`
+**Erro comum**: erro de autenticação ou chave inválida na Gemini API
 
 **Soluções**:
 
-1. **Verificar região**
+1. **Verificar chave**
    ```env
-   AWS_REGION=us-east-1  # Obrigatório para Claude
+   GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
    ```
 
-2. **Verificar model access**
-   - AWS Console → Bedrock → Model access
-   - Habilitar Claude 3.5 Sonnet
-
-3. **Verificar IAM permissions**
-   ```json
-   {
-     "Version": "2012-10-17",
-     "Statement": [
-       {
-         "Effect": "Allow",
-         "Action": [
-           "bedrock:InvokeModel",
-           "bedrock:ListFoundationModels"
-         ],
-         "Resource": "*"
-       }
-     ]
-   }
+2. **Verificar modelo**
+   ```env
+   GEMINI_MODEL=gemini-2.5-flash
    ```
+
+3. **Gerar uma nova chave**
+   - Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
+   - Clique em **Create API key**
+   - Atualize o `.env` e reinicie o backend
 
 ### ElevenLabs Rate Limit
 

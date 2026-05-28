@@ -101,7 +101,7 @@ const App = () => {
                   Workshop Agente Conversacional
                 </h1>
                 <p className="text-lg text-muted-foreground">
-                  Conversa inteligente com IA - Transcrição em tempo real com Deepgram + Claude
+                  Conversa inteligente com IA - Transcrição em tempo real com Deepgram + Gemini
                 </p>
               </div>
             </div>
@@ -145,7 +145,7 @@ const App = () => {
                   </a>
                 </p>
                 <p className="mt-1 text-xs">
-                  Powered by React • Node.js • Deepgram • AWS Bedrock • Socket.io
+                  Powered by React • Node.js • Deepgram • Google Gemini • Socket.io
                 </p>
               </div>
             </div>

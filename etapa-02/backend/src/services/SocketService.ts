@@ -2,14 +2,14 @@ import { Server as SocketIOServer } from 'socket.io';
 import { Server as HTTPServer } from 'http';
 import { ClientSession, SocketEvents, TranscriptionResult, AIResponse } from '@/types/index.js';
 import { DeepgramService } from './DeepgramService.js';
-import { BedrockService } from './BedrockService.js';
+import { GeminiService } from './GeminiService.js';
 import { serverConfig } from '@/utils/config.js';
 import { logger } from '@/utils/logger.js';
 
 export class SocketService {
   private io: SocketIOServer;
   private deepgramService: DeepgramService;
-  private bedrockService: BedrockService;
+  private geminiService: GeminiService;
   private sessions = new Map<string, ClientSession>();
 
   constructor(httpServer: HTTPServer) {
@@ -24,7 +24,7 @@ export class SocketService {
     });
 
     this.deepgramService = new DeepgramService();
-    this.bedrockService = new BedrockService();
+    this.geminiService = new GeminiService();
     this.setupEventHandlers();
   }
 
@@ -86,7 +86,7 @@ export class SocketService {
           if (!result.isInterim && result.text.trim()) {
             try {
               logger.info(`🤖 Generating AI response for: "${result.text}"`);
-              const aiResponse = await this.bedrockService.generateResponse(result.text, session.id);
+              const aiResponse = await this.geminiService.generateResponse(result.text, session.id);
               session.socket.emit('ai-response', aiResponse);
             } catch (error) {
               logger.error('AI response generation failed', { sessionId: session.id, error });
@@ -194,7 +194,7 @@ export class SocketService {
     return await this.deepgramService.testConnection();
   }
 
-  public async testBedrockConnection(): Promise<boolean> {
-    return await this.bedrockService.testConnection();
+  public async testGeminiConnection(): Promise<boolean> {
+    return await this.geminiService.testConnection();
   }
 }

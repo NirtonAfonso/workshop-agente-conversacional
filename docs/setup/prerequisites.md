@@ -56,16 +56,16 @@ console.log('MediaDevices:', !!navigator.mediaDevices);
 3. Clique em **Create API Key**
 4. Copie a chave gerada
 
-### 2. AWS Bedrock (IA Conversacional)
-- **Conta**: [AWS Console](https://console.aws.amazon.com)
-- **Região**: us-east-1 (obrigatório para Claude)
-- **Modelo**: Claude 3.5 Sonnet
+### 2. Google Gemini (IA Conversacional)
+- **Conta**: [Google AI Studio](https://console.aws.amazon.com)
+- **Região**: Google AI Studio (obrigatório para Gemini)
+- **Modelo**: Gemini 2.5 Flash
 
 #### Como Configurar
-1. Acesse AWS Console
-2. Navegue até **Amazon Bedrock**
-3. Habilite acesso ao modelo Claude
-4. Crie credenciais IAM com permissões Bedrock
+1. Acesse Google AI Studio
+2. Navegue até **Google AI Studio**
+3. Copie a chave gerada
+4. Crie credenciais API Key com permissão para usar a Gemini API
 
 ### 3. ElevenLabs (Text-to-Speech)
 - **Conta**: [Criar conta](https://elevenlabs.io)
@@ -83,7 +83,7 @@ console.log('MediaDevices:', !!navigator.mediaDevices);
 - **Gratuito**: $150 em créditos
 - **Uso estimado**: ~$5-10 para workshop completo
 
-### AWS Bedrock
+### Google Gemini
 - **Pay-per-use**: ~$0.003 por 1K tokens
 - **Uso estimado**: ~$2-5 para workshop completo
 
@@ -102,11 +102,9 @@ Prepare um arquivo `.env` com estas variáveis:
 # Deepgram
 DEEPGRAM_API_KEY=
 
-# AWS Bedrock
-AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-BEDROCK_MODEL_ID=anthropic.claude-3-5-sonnet-20241022-v2:0
+# Google Gemini
+GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
+GEMINI_MODEL=gemini-2.5-flash
 
 # ElevenLabs
 ELEVENLABS_API_KEY=
@@ -127,7 +125,7 @@ Antes de começar, verifique:
 - [ ] Git configurado
 - [ ] Navegador moderno com Web Audio API
 - [ ] Conta Deepgram com API key
-- [ ] Conta AWS com acesso Bedrock
+- [ ] Conta no Google AI Studio com acesso Gemini
 - [ ] Conta ElevenLabs com API key
 - [ ] Arquivo `.env` preparado
 - [ ] Microfone funcionando

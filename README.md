@@ -1,13 +1,13 @@
 # 🎤 Workshop Agente Conversacional
 
-Um workshop completo demonstrando como criar um agente conversacional inteligente que captura áudio em tempo real, transcreve com Deepgram, gera respostas inteligentes com AWS Bedrock Claude e converte texto em voz com ElevenLabs.
+Um workshop completo demonstrando como criar um agente conversacional inteligente que captura áudio em tempo real, transcreve com Deepgram, gera respostas inteligentes com Gemini e converte texto em voz com ElevenLabs.
 
 ![Status](https://img.shields.io/badge/status-pronto-brightgreen)
 ![React](https://img.shields.io/badge/React-18.3.1-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-blue)
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green)
 ![Deepgram](https://img.shields.io/badge/Deepgram-API-purple)
-![AWS Bedrock](https://img.shields.io/badge/AWS%20Bedrock-Claude-orange)
+![Google Gemini](https://img.shields.io/badge/Google%20Gemini-API-blue)
 ![ElevenLabs](https://img.shields.io/badge/ElevenLabs-TTS-red)
 
 ## 📋 Índice
@@ -27,7 +27,7 @@ Este workshop apresenta uma implementação completa de um agente conversacional
 
 - **🎤 Captura áudio** em tempo real do microfone do usuário
 - **📝 Transcreve automaticamente** usando a API do Deepgram (Speech-to-Text)
-- **🤖 Gera respostas inteligentes** usando AWS Bedrock Claude Sonnet 4
+- **🤖 Gera respostas inteligentes** usando Gemini via Google AI Studio
 - **🔊 Converte respostas em áudio** usando ElevenLabs (Text-to-Speech)
 - **💬 Mantém conversação natural** com contexto e memória
 - **⚡ Funciona em tempo real** com WebSocket para comunicação instantânea
@@ -36,7 +36,7 @@ Este workshop apresenta uma implementação completa de um agente conversacional
 
 - Captura e processamento de áudio no navegador com Web Audio API
 - Comunicação em tempo real com WebSocket (Socket.io)
-- Integração com APIs de IA modernas (Deepgram, AWS Bedrock, ElevenLabs)
+- Integração com APIs de IA modernas (Deepgram, Google Gemini, ElevenLabs)
 - Desenvolvimento fullstack com React + TypeScript e Node.js + TypeScript
 - Criação de interfaces modernas e responsivas com Radix UI e Tailwind CSS
 - Arquitetura de aplicações conversacionais
@@ -56,7 +56,7 @@ Este workshop apresenta uma implementação completa de um agente conversacional
 - **Express.js** - Framework web minimalista e flexível
 - **Socket.io** - WebSocket para comunicação bidirecional
 - **Deepgram SDK** - Speech-to-Text em tempo real
-- **AWS Bedrock** - Acesso ao Claude Sonnet 4 para IA conversacional
+- **Google Gemini** - Acesso ao Gemini 2.5 Flash para IA conversacional
 - **ElevenLabs** - Text-to-Speech de alta qualidade
 
 ### Segurança & DevEx
@@ -76,7 +76,7 @@ Antes de começar, você precisará de:
 
 ### Contas e Chaves de API
 - **Conta no Deepgram** ([criar conta gratuita](https://deepgram.com))
-- **Conta AWS** com acesso ao Bedrock Claude ([configurar acesso](https://docs.aws.amazon.com/bedrock/))
+- **Conta no Google AI Studio** com chave da Gemini API ([criar chave](https://aistudio.google.com/app/apikey))
 - **Conta no ElevenLabs** ([criar conta](https://elevenlabs.io))
 
 > **💡 Dica**: Todas as plataformas oferecem créditos gratuitos para teste!
@@ -87,7 +87,7 @@ Antes de começar, você precisará de:
 
 ```bash
 # Clone o repositório
-git clone https://github.com/viniganancio/workshop-agente-conversacional.git
+git clone https://github.com/NirtonAfonso/workshop-agente-conversacional.git
 cd workshop-agente-conversacional
 
 # Este projeto tem 3 etapas - use a etapa-03 (versão completa)
@@ -110,11 +110,9 @@ Crie um arquivo `.env` na pasta `etapa-03/backend/`:
 # Deepgram (Speech-to-Text)
 DEEPGRAM_API_KEY=sua_chave_deepgram_aqui
 
-# AWS Bedrock (IA Conversacional)
-AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=sua_aws_access_key
-AWS_SECRET_ACCESS_KEY=sua_aws_secret_key
-BEDROCK_MODEL_ID=anthropic.claude-3-5-sonnet-20241022-v2:0
+# Google Gemini (IA Conversacional)
+GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
+GEMINI_MODEL=gemini-2.5-flash
 
 # ElevenLabs (Text-to-Speech)
 ELEVENLABS_API_KEY=sua_chave_elevenlabs_aqui
@@ -134,10 +132,10 @@ NODE_ENV=development
 2. Crie uma conta ou faça login
 3. Navegue até **API Keys** e crie uma nova chave
 
-#### AWS Bedrock
-1. Acesse [AWS Console](https://console.aws.amazon.com)
-2. Configure acesso ao Bedrock Claude na região us-east-1
-3. Crie credenciais IAM com permissões para Bedrock
+#### Google Gemini
+1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Crie uma chave de API para usar a Gemini API
+3. Copie a chave e use em GEMINI_API_KEY no arquivo .env
 
 #### ElevenLabs
 1. Acesse [ElevenLabs](https://elevenlabs.io)
@@ -166,7 +164,7 @@ Abra seu navegador e acesse: `http://localhost:8080`
 1. **🎤 Inicie a gravação**: Clique no botão "Iniciar Gravação"
 2. **🔓 Permita acesso**: Autorize o uso do microfone
 3. **💬 Converse naturalmente**: Fale em português - sua voz será transcrita em tempo real
-4. **🤖 Receba respostas**: O Claude gerará respostas inteligentes automaticamente
+4. **🤖 Receba respostas**: O Gemini gerará respostas inteligentes automaticamente
 5. **🔊 Ouça as respostas**: As respostas são convertidas em áudio e reproduzidas
 6. **🔄 Continue a conversa**: Mantenha um diálogo natural e fluido
 7. **⏹️ Pare quando quiser**: Clique em "Parar Gravação" para finalizar
@@ -203,7 +201,7 @@ workshop-agente-conversacional/
 │       │   ├── middleware/  # Security & validation
 │       │   ├── services/
 │       │   │   ├── DeepgramService.ts    # STT
-│       │   │   ├── BedrockService.ts     # IA
+│       │   │   ├── GeminiService.ts     # IA
 │       │   │   ├── ElevenLabsService.ts  # TTS
 │       │   │   └── SocketService.ts      # WebSocket
 │       │   ├── types/       # TypeScript definitions
@@ -229,7 +227,7 @@ workshop-agente-conversacional/
 
 ### 🧠 Inteligência Artificial
 - ✅ **Speech-to-Text**: Transcrição em tempo real com Deepgram (português brasileiro)
-- ✅ **IA Conversacional**: Respostas inteligentes com AWS Bedrock Claude Sonnet 4
+- ✅ **IA Conversacional**: Respostas inteligentes com Gemini via Google AI Studio
 - ✅ **Text-to-Speech**: Síntese de voz natural com ElevenLabs
 - ✅ Manutenção de contexto conversacional
 
@@ -258,7 +256,7 @@ Este workshop está organizado em 3 etapas progressivas:
 - Interface básica
 
 ### 📁 Etapa 02 - IA Conversacional
-- Adição do AWS Bedrock Claude
+- Adição do Gemini
 - Respostas inteligentes
 - Contexto conversacional
 

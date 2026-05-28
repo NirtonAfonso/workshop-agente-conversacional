@@ -321,7 +321,7 @@ Solução: Verificar `CORS_ORIGIN` no `.env`
 
 Esta etapa estabelece a base para:
 
-**Etapa 02**: Adicionar AWS Bedrock Claude para IA conversacional
+**Etapa 02**: Adicionar Gemini para IA conversacional
 **Etapa 03**: Incluir ElevenLabs para Text-to-Speech completo
 
 ## 🎯 Conceitos-Chave

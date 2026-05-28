@@ -9,7 +9,7 @@ Segunda etapa do workshop que adiciona **inteligência conversacional** às tran
 
 ### ✨ Funcionalidades
 - 🎤 **Tudo da Etapa 01** (áudio + transcrição)
-- 🤖 **IA Conversacional** com AWS Bedrock Claude
+- 🤖 **IA Conversacional** com Gemini
 - 💬 **Interface de chat** inteligente
 - 🧠 **Contexto conversacional** mantido
 
@@ -28,7 +28,7 @@ npm run dev
 ```
 
 ### 🔧 Configuração adicional
-Requer configuração AWS Bedrock no arquivo `.env` do backend.
+Requer configuração Google Gemini no arquivo `.env` do backend.
 
 ### 📚 Documentação detalhada
 - [Frontend README](./frontend/README.md)

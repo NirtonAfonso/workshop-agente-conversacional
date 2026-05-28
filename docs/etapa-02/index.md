@@ -5,12 +5,12 @@
 
 ## 🎯 Objetivo
 
-Segunda etapa que adiciona **inteligência conversacional** às transcrições usando AWS Bedrock Claude.
+Segunda etapa que adiciona **inteligência conversacional** às transcrições usando Gemini.
 
 ## ✨ Funcionalidades
 
 - **🎤 Tudo da Etapa 01** (áudio + transcrição)
-- **🤖 IA Conversacional** com AWS Bedrock Claude Sonnet 4
+- **🤖 IA Conversacional** com Gemini via Google AI Studio
 - **💬 Interface de chat** inteligente
 - **🧠 Contexto conversacional** mantido
 
@@ -26,7 +26,7 @@ graph TB
     subgraph "🌐 Backend (Node.js + TypeScript)"
         D[📡 WebSocket Server] --> E[🎵 Audio Processing]
         E --> F[📝 Deepgram STT]
-        E --> G[🤖 AWS Bedrock Claude]
+        E --> G[🤖 Gemini]
     end
 
     B <--> D
@@ -44,30 +44,28 @@ graph TB
 
 ### Pré-requisitos
 - Tudo da Etapa 01
-- Conta AWS com acesso ao Bedrock
+- Conta no Google AI Studio com acesso ao Gemini
 
 ### Configuração Adicional
 
 Adicione ao `.env` do backend:
 
 ```env
-# AWS Bedrock Configuration
-AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=sua_aws_access_key
-AWS_SECRET_ACCESS_KEY=sua_aws_secret_key
-BEDROCK_MODEL_ID=anthropic.claude-3-5-sonnet-20241022-v2:0
+# Google Gemini Configuration
+GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
+GEMINI_MODEL=gemini-2.5-flash
 ```
 
-### Setup AWS Bedrock
+### Setup Google Gemini
 
-1. Acesse [AWS Console](https://console.aws.amazon.com)
-2. Habilite Amazon Bedrock na região us-east-1
-3. Configure acesso ao Claude Sonnet 4
-4. Crie credenciais IAM com permissões Bedrock
+1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Habilite Google AI Studio na região Google AI Studio
+3. Use o modelo gemini-2.5-flash
+4. Crie credenciais API Key com permissão para usar a Gemini API
 
 ## 🎓 O que Você Aprende (Novo)
 
-1. **AWS Bedrock Integration** - Acesso ao Claude via API
+1. **Google Gemini Integration** - Acesso ao Gemini via API
 2. **Conversational AI** - Contexto entre mensagens
 3. **Service Orchestration** - Pipeline STT → AI
 4. **Chat Interface** - UI conversacional moderna
@@ -76,8 +74,8 @@ BEDROCK_MODEL_ID=anthropic.claude-3-5-sonnet-20241022-v2:0
 ## 🔄 Fluxo Conversacional
 
 1. **Usuário fala** → Transcrição em tempo real
-2. **Texto transcrito** → Enviado para Claude
-3. **Claude processa** → Gera resposta inteligente
+2. **Texto transcrito** → Enviado para Gemini
+3. **Gemini processa** → Gera resposta inteligente
 4. **Resposta exibida** → Interface de chat
 5. **Contexto mantido** → Conversa fluida
 

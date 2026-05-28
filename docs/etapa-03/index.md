@@ -29,7 +29,7 @@ graph TB
     subgraph "🌐 Backend (Node.js + TypeScript)"
         E[📡 WebSocket Server] --> F[🎵 Audio Processing]
         F --> G[📝 Deepgram STT]
-        F --> H[🤖 AWS Bedrock Claude]
+        F --> H[🤖 Gemini]
         F --> I[🔊 ElevenLabs TTS]
     end
 
@@ -60,11 +60,9 @@ Complete o `.env` do backend:
 # Deepgram (STT)
 DEEPGRAM_API_KEY=sua_chave_deepgram
 
-# AWS Bedrock (IA)
-AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=sua_aws_access_key
-AWS_SECRET_ACCESS_KEY=sua_aws_secret_key
-BEDROCK_MODEL_ID=anthropic.claude-3-5-sonnet-20241022-v2:0
+# Google Gemini (IA)
+GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
+GEMINI_MODEL=gemini-2.5-flash
 
 # ElevenLabs (TTS)
 ELEVENLABS_API_KEY=sua_chave_elevenlabs
@@ -90,7 +88,7 @@ ELEVENLABS_MODEL=eleven_multilingual_v2
 
 1. **🎤 Usuário fala** → Captura de áudio
 2. **📝 Transcrição** → Deepgram STT
-3. **🤖 IA processa** → Claude gera resposta
+3. **🤖 IA processa** → Gemini gera resposta
 4. **🔊 Síntese de voz** → ElevenLabs TTS
 5. **🎵 Reprodução** → Resposta em áudio
 6. **🔄 Ciclo continua** → Conversa natural
@@ -100,7 +98,7 @@ ELEVENLABS_MODEL=eleven_multilingual_v2
 Uma aplicação completa de **conversação por voz** que:
 
 - **Entende** o que você fala (STT)
-- **Pensa** com inteligência artificial (Claude)
+- **Pensa** com inteligência artificial (Gemini)
 - **Responde** com voz natural (TTS)
 - **Mantém** contexto conversacional
 - **Funciona** em tempo real

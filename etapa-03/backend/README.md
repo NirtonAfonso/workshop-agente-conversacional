@@ -16,7 +16,7 @@ Servidor Node.js + TypeScript que orquestra a comunicação entre frontend e mú
 
 ### Integrações de IA
 - **Deepgram SDK** - Speech-to-Text em tempo real
-- **AWS Bedrock** - Claude Sonnet 4 para IA conversacional
+- **Google Gemini** - Gemini 2.5 Flash para IA conversacional
 - **ElevenLabs** - Text-to-Speech de alta qualidade
 
 ### Segurança e DevEx
@@ -36,7 +36,7 @@ backend/
 │   │   └── security.ts          # Segurança e validação
 │   ├── services/                # Lógica de negócio
 │   │   ├── DeepgramService.ts   # Integração Deepgram STT
-│   │   ├── BedrockService.ts    # Integração AWS Bedrock Claude
+│   │   ├── GeminiService.ts    # Integração Gemini
 │   │   ├── ElevenLabsService.ts # Integração ElevenLabs TTS
 │   │   └── SocketService.ts     # Gerenciamento WebSocket
 │   ├── types/                   # Definições TypeScript
@@ -80,11 +80,9 @@ npm run clean
 # Deepgram Configuration
 DEEPGRAM_API_KEY=your_deepgram_api_key_here
 
-# AWS Bedrock Configuration
-AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=your_aws_access_key_id
-AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
-BEDROCK_MODEL_ID=anthropic.claude-3-5-sonnet-20241022-v2:0
+# Google Gemini Configuration
+GEMINI_API_KEY=sua_chave_google_ai_studio_aqui
+GEMINI_MODEL=gemini-2.5-flash
 
 # ElevenLabs Configuration
 ELEVENLABS_API_KEY=your_elevenlabs_api_key
@@ -113,15 +111,15 @@ class DeepgramService {
 }
 ```
 
-### BedrockService
+### GeminiService
 Serviço para IA conversacional:
-- **Claude Sonnet 4** via AWS Bedrock
+- **Gemini 2.5 Flash** via Google Gemini
 - **Contexto conversacional** mantido
 - **System prompts** customizáveis
 - **Rate limiting** interno
 
 ```typescript
-class BedrockService {
+class GeminiService {
   async generateResponse(userMessage: string, sessionId?: string): Promise<AIResponse>
   async testConnection(): Promise<boolean>
   clearConversation(sessionId: string): void
@@ -256,13 +254,13 @@ GET /api/status  # Status detalhado com configurações
 ```
 Frontend Audio → WebSocket → Deepgram → Transcription
                                 ↓
-Frontend ← TTS Audio ← ElevenLabs ← AI Response ← Bedrock Claude
+Frontend ← TTS Audio ← ElevenLabs ← AI Response ← Gemini
 ```
 
 ### Pipeline Detalhado
 1. **Audio Capture**: Frontend envia chunks de áudio
 2. **STT Processing**: Deepgram processa e retorna transcrição
-3. **AI Processing**: Claude gera resposta inteligente
+3. **AI Processing**: Gemini gera resposta inteligente
 4. **TTS Processing**: ElevenLabs converte resposta em áudio
 5. **Audio Playback**: Frontend reproduz áudio da resposta
 
@@ -306,7 +304,7 @@ logger.info('🎤 Audio chunk received', {
   sessionId
 })
 
-logger.info('🤖 Claude response generated', {
+logger.info('🤖 Gemini response generated', {
   responseLength: response.text.length,
   sessionId
 })
@@ -321,7 +319,7 @@ logger.info('🤖 Claude response generated', {
 
 ### Health Checks Automáticos
 - **Deepgram**: Teste de conectividade na inicialização
-- **AWS Bedrock**: Validação de credenciais
+- **Google Gemini**: Validação de credenciais
 - **ElevenLabs**: Verificação de API key
 
 ### Monitoramento

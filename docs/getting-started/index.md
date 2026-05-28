@@ -105,61 +105,45 @@ curl -X GET "https://api.deepgram.com/v1/projects" \
 
 ---
 
-### 2. 🤖 AWS Bedrock (IA Conversacional)
+### 2. 🤖 Google Gemini (IA Conversacional)
 
-#### Por que AWS Bedrock Claude?
-- 🧠 **Claude Sonnet 4**: Modelo mais avançado
+#### Por que Gemini?
+- 🧠 **Gemini 2.5 Flash**: Modelo mais avançado
 - 💬 **Conversação natural** em português
 - 🔒 **Segurança enterprise**
 - 📊 **Pay-per-use** (~ $0.003/1K tokens)
 
-#### Setup da Conta AWS
+#### Setup da Conta no Google AI Studio
 
-```{admonition} Importante sobre AWS
+```{admonition} Importante sobre Google AI Studio
 :class: warning
 
-- Requer **cartão de crédito** para verificação
-- **Região obrigatória**: us-east-1
-- **Aprovação**: Bedrock pode levar alguns minutos
+- Use uma Conta Google para acessar o Google AI Studio
+- A chave da Gemini API pode ser criada em poucos minutos
 ```
 
-**Passo 1: Conta AWS**
-1. Acesse [aws.amazon.com](https://aws.amazon.com)
-2. "Create AWS Account"
-3. Preencha dados + cartão de crédito
-4. Complete verificação por telefone
+**Passo 1: Conta no Google AI Studio**
+1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Faça login com sua Conta Google
+3. Crie ou selecione um projeto Google
 
-**Passo 2: Habilitar Bedrock**
-1. Faça login no [AWS Console](https://console.aws.amazon.com)
-2. **IMPORTANTE**: Mude região para **us-east-1** (canto superior direito)
-3. Procure "Bedrock" nos serviços
-4. Vá em **"Model access"**
-5. **"Manage model access"**
-6. Habilite: **"Anthropic Claude 3.5 Sonnet"**
-7. Aguarde aprovação (1-5 minutos)
+**Passo 2: Criar chave da Gemini API**
+1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Clique em **Create API key**
+3. Crie ou selecione um projeto Google
+4. Copie a chave gerada
+5. Use o modelo `gemini-2.5-flash` no `.env`
 
-**Passo 3: Credenciais IAM**
-1. Vá para **IAM** no console
-2. **"Users"** → **"Create user"**
-3. Nome: `bedrock-workshop-user`
-4. **"Attach policies directly"**
-5. Selecione: `AmazonBedrockFullAccess`
-6. Complete criação
-7. Clique no usuário → **"Security credentials"**
-8. **"Create access key"** → "Application running on AWS services"
-9. **Copie**: Access Key ID e Secret Access Key
+**Passo 3: Configurar variáveis de ambiente**
+1. Abra o arquivo `.env` do backend
+2. Adicione `GEMINI_API_KEY=sua_chave_google_ai_studio_aqui`
+3. Adicione `GEMINI_MODEL=gemini-2.5-flash`
+4. Salve o arquivo e reinicie o backend
 
 #### Teste Rápido
 ```bash
-# Instalar AWS CLI (opcional)
-# pip install awscli
-
-# Configurar (se instalou CLI)
-aws configure
-# Insira: Access Key, Secret Key, us-east-1, json
-
-# Teste via CLI
-aws bedrock list-foundation-models --region us-east-1
+# Testar acesso aos modelos Gemini
+curl "https://generativelanguage.googleapis.com/v1beta/models?key=SUA_GEMINI_API_KEY"
 ```
 
 ---
@@ -208,7 +192,7 @@ curl -X GET "https://api.elevenlabs.io/v1/voices" \
 
 ```bash
 # Clone o projeto
-git clone https://github.com/viniganancio/workshop-agente-conversacional.git
+git clone https://github.com/NirtonAfonso/workshop-agente-conversacional.git
 cd workshop-agente-conversacional
 
 # Explore a estrutura
@@ -277,7 +261,7 @@ npm run dev
 
 ### 🔑 APIs Configuradas
 - [ ] **Deepgram**: Conta criada + API key obtida + teste passou
-- [ ] **AWS Bedrock**: Conta AWS + Bedrock habilitado + IAM configurado
+- [ ] **Google Gemini**: Conta Google AI Studio + chave da Gemini API configurada
 - [ ] **ElevenLabs**: Conta criada + API key obtida + teste passou
 
 ### 🎯 Projeto Funcionando
@@ -363,7 +347,7 @@ Durante o workshop completo, você gastará aproximadamente:
 | Serviço | Uso Estimado | Custo |
 |---------|--------------|-------|
 | **Deepgram** | ~30 min de áudio | $1.05 |
-| **AWS Bedrock** | ~500 requests | $2.50 |
+| **Google Gemini** | ~500 requests | $2.50 |
 | **ElevenLabs** | ~5000 caracteres | $0.15 |
 | **Total** | | **~$3.70** |
 
@@ -372,7 +356,7 @@ Durante o workshop completo, você gastará aproximadamente:
 
 - **Deepgram**: $150 gratuitos
 - **ElevenLabs**: 10k caracteres/mês
-- **AWS**: Free tier para novos usuários
+- **Google AI Studio**: cota gratuita disponível conforme limites atuais da Gemini API
 
 O workshop pode ser feito **completamente gratuito**!
 ```

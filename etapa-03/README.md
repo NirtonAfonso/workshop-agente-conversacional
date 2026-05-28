@@ -32,7 +32,7 @@ npm run dev
 ### 🔧 Configuração completa
 Requer todas as APIs configuradas no `.env` do backend:
 - Deepgram (STT)
-- AWS Bedrock (IA)
+- Google Gemini (IA)
 - ElevenLabs (TTS)
 
 ### 📚 Documentação detalhada
