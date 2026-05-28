@@ -18,6 +18,15 @@ Este workshop apresenta uma implementação completa de um agente conversacional
 - **💬 Mantém conversação natural** com contexto e memória
 - **⚡ Funciona em tempo real** com WebSocket para comunicação instantânea
 
+## 🌿 Branches do Workshop
+
+Use a branch correta antes de começar:
+
+- **`Gemini`**: IA conversacional com Google AI Studio/Gemini e voz com Gemini TTS.
+- **`AWS`**: IA conversacional com AWS Bedrock Claude e voz com Gemini TTS.
+
+Veja o guia [Branches do Workshop](branches.md) para escolher a trilha certa.
+
 ## 📋 Estrutura do Workshop
 
 ```{toctree}
@@ -25,6 +34,7 @@ Este workshop apresenta uma implementação completa de um agente conversacional
 :caption: Workshop Completo
 
 introduction/index
+branches
 getting-started/index
 etapa-01/index
 etapa-02/index

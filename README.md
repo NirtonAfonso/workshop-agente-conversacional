@@ -18,8 +18,19 @@ Um workshop completo demonstrando como criar um agente conversacional inteligent
 - [Instalação e Configuração](#instalação-e-configuração)
 - [Como Usar](#como-usar)
 - [Funcionalidades](#funcionalidades)
+- [Branches do Workshop](#branches-do-workshop)
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [Licença](#licença)
+
+## 🌿 Branches do Workshop
+
+Este repositório tem duas trilhas para os alunos:
+
+- **Branch `Gemini`**: usa **Google AI Studio/Gemini** para a IA conversacional e **Gemini TTS** para voz.
+- **Branch `AWS`**: usa **AWS Bedrock Claude** para a IA conversacional e **Gemini TTS** para voz.
+
+Se você está seguindo o tutorial de Gemini, use `git checkout Gemini`.
+Se você está seguindo o tutorial de Bedrock, use `git checkout AWS`.
 
 ## 🚀 Sobre o Projeto
 
@@ -88,6 +99,11 @@ Antes de começar, você precisará de:
 # Clone o repositório
 git clone https://github.com/NirtonAfonso/workshop-agente-conversacional.git
 cd workshop-agente-conversacional
+
+# Escolha a trilha do workshop
+git checkout Gemini   # Para Gemini + Gemini TTS
+# ou
+git checkout AWS      # Para Bedrock + Gemini TTS
 
 # Este projeto tem 3 etapas - use a etapa-03 (versão completa)
 cd etapa-03

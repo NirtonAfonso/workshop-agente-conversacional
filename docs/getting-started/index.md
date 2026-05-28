@@ -184,6 +184,11 @@ curl "https://generativelanguage.googleapis.com/v1beta/models?key=SUA_GEMINI_API
 git clone https://github.com/NirtonAfonso/workshop-agente-conversacional.git
 cd workshop-agente-conversacional
 
+# Escolha a trilha do workshop
+git checkout Gemini   # Para Gemini + Gemini TTS
+# ou
+git checkout AWS      # Para Bedrock + Gemini TTS
+
 # Explore a estrutura
 ls -la
 # Você verá: etapa-01/, etapa-02/, etapa-03/, docs/

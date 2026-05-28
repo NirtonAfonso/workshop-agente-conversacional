@@ -8,6 +8,11 @@ Guia completo para instalar e configurar o workshop.
 # Clone o repositório
 git clone https://github.com/NirtonAfonso/workshop-agente-conversacional.git
 cd workshop-agente-conversacional
+
+# Escolha a trilha do workshop
+git checkout Gemini   # Para Gemini + Gemini TTS
+# ou
+git checkout AWS      # Para Bedrock + Gemini TTS
 ```
 
 ## 📁 Estrutura das Etapas
